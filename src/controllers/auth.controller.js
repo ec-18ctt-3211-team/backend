@@ -9,11 +9,13 @@ class AuthController {
     try {
       // POST
       const params = req.body;
-      const serviceResult = this.registerService.execute(params);
-      if (serviceResult.failure) throw serviceResult.message;
+      const serviceResult = await this.registerService.execute(params);
+      if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({ valid: true, newUser: serviceResult.user });
     } catch (err) {
       res.send({ valid: false, message: err.message });
     }
   }
 }
+
+module.exports = AuthController;
