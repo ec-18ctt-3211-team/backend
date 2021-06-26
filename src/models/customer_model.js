@@ -17,6 +17,11 @@ const customerSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  ava: {
+    type: String,
+    require: true,
+    default: "/images/defaultAva.png",
+  },
   is_host: {
     type: Boolean,
     require: true,
