@@ -10,6 +10,7 @@ mongoose.connect(config.Database.connectionString, {
 
 mongoose.connection.once("open", () => {
   console.log("moongose is running");
+  // can replace function below with something else more useful for you
   doSth();
 });
 
