@@ -16,7 +16,6 @@ const authController = require("./controllers/auth.controller");
 const authDaos = require("./daos/auth.daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
-const { pass } = require("./main/DBConnection");
 // Mappers
 
 const container = awilix.createContainer();
