@@ -13,7 +13,7 @@ class AuthController {
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({ valid: true, newUser: serviceResult.user });
     } catch (err) {
-      res.send({ valid: false, message: err.message });
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 }
