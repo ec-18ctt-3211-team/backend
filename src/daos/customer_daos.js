@@ -6,7 +6,7 @@ class CustomerDaos {
     async getAll() {
         try {
             const customer = await this.customerModel.find({});
-            return { customer }
+            return { customer };
         } catch (err) {
             return { failure: true, message: "Something went wrong" }
         }
