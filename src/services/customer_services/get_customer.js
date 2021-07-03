@@ -2,9 +2,9 @@ class GetCustomer {
     constructor({ customerDaos }) {
         this.customerDaos = customerDaos;
     }
-    async execute(params) {
-        const { id } = params;
-        const customer = await this.customerDaos.GetCustomer(id);
+    async execute(idParams) {
+        const { id } = idParams;
+        const customer = await this.customerDaos.getById(id);
         if (!customer) {
             return {
                 failure: true,

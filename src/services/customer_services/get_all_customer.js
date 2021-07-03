@@ -3,7 +3,7 @@ class GetAllCustomer {
         this.customerDaos = customerDaos;
     }
     async execute() {
-        const customer = await this.customerDaos.GetAllCustomer();
+        const customer = await this.customerDaos.getAll();
         if (!customer) {
             return {
                 failure: true,

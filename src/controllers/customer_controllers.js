@@ -3,40 +3,41 @@ class CustomerController {
         this.getCustomerService = getCustomerService;
         this.getAllCustomerService = getAllCustomerService;
         this.updateCustomerService = updateCustomerService;
-        this.getCustomer = this.getCustomer.bind(this);
-        this.getAllCustomer = this.getAllCustomer.bind(this);
-        this.updateCustomer = this.updateCustomer.bind(this);
+        this.get = this.get.bind(this);
+        this.index = this.index.bind(this);
+        this.update = this.update.bind(this);
     }
 
-    async getCustomer(req, res) {
+    async get(req, res) {
         try {
-            const params = req.body;
-            const serviceResult = await this.getCustomerService.execute(params);
+            const idParams = req.params;
+            const serviceResult = await this.getCustomerService.execute(idParams);
             if (serviceResult.failure) throw new Error(serviceResult.message);
-            res.status(200).send({ valid: true, customer: serviceResult.Customer });
+            res.status(200).send({ valid: true, customer: serviceResult.customer });
         } catch (err) {
-            res.send({ valid: false, customer: null });
+            res.status(400).send({ valid: false, customer: null });
         }
     }
 
-    async getAllCustomer(req, res) {
+    async index(req, res) {
         try {
             const serviceResult = await this.getAllCustomerService.execute();
             if (serviceResult.failure) throw new Error(serviceResult.message);
-            res.status(200).send({ valid: true, customer: serviceResult.Customer });
+            res.status(200).send({ valid: true, customer: serviceResult.customer });
         } catch (err) {
-            res.send({ valid: false, customer: null });
+            res.status(400).send({ valid: false, customer: null });
         }
     }
 
-    async updateCustomer(req, res) {
+    async update(req, res) {
         try {
+            const idParams = req.params;
             const params = req.body;
-            const serviceResult = await this.updateCustomerService.execute(params);
+            const serviceResult = await this.updateCustomerService.execute(idParams, params);
             if (serviceResult.failure) throw new Error(serviceResult.message);
-            res.status(200).send({ valid: true, updateCustomer: serviceResult, message: "updated successfully" });
+            res.status(200).send({ valid: true, updateCustomer: serviceResult.customer, message: "updated successfully" });
         } catch (err) {
-            res.send({ valid: false, updateCustomer: null, message: err.message });
+            res.status(400).send({ valid: false, updateCustomer: null, message: err.message });
         }
     }
 }

@@ -3,9 +3,9 @@ const express = require("express");
 module.exports = ({ customerController }) => {
     const router = express.Router();
 
-    router.get("/:id", customerController.getCustomer);
-    router.get("/", customerController.getAllCustomer);
-    router.put("/:id", customerController.updateCustomer);
+    router.get("/:id", customerController.get);
+    router.get("/", customerController.index);
+    router.put("/:id", customerController.update);
 
     return router;
 };

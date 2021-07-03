@@ -1,10 +1,13 @@
 class UpdateCustomer {
-    constructor({ customerDaos }) {
+    constructor({ customerDaos, passwordHasher }) {
         this.customerDaos = customerDaos;
+        this.passwordHasher = passwordHasher;
     }
-    async execute(params) {
-        const { id } = params;
-        const customer = await this.customerDaos.UpdateCustomer(id);
+    async execute(idParams, params) {
+        const { id } = idParams;
+        const { email, name, password, phone, payment_number, ci } = params;
+        const hashedPassword = await this.passwordHasher.hash(password);
+        const customer = await this.customerDaos.updateById(id, email, name, hashedPassword, phone, payment_number, ci);
         if (!customer) {
             return {
                 failure: true,
