@@ -3,11 +3,12 @@ class UpdateCustomer {
         this.customerDaos = customerDaos;
         this.passwordHasher = passwordHasher;
     }
-    async execute(idParams, params) {
-        const { id } = idParams;
-        const { email, name, password, phone, payment_number, ci } = params;
+    async execute(params, body) {
+        const { id } = params;
+        const { email, name, password, phone, payment_number, ci } = body;
         const hashedPassword = await this.passwordHasher.hash(password);
-        const customer = await this.customerDaos.updateById(id, email, name, hashedPassword, phone, payment_number, ci);
+        const customer = await this.customerDaos.updateById(id, email, name,
+            hashedPassword, phone, payment_number, ci);
         if (!customer) {
             return {
                 failure: true,

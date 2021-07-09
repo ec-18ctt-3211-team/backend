@@ -4,12 +4,6 @@ class GetAllDiscount {
     }
     async execute() {
         const discounts = await this.discountDaos.getAll();
-        if (!discounts) {
-            return {
-                failure: true,
-                message: "discounts not found",
-            };
-        }
         return discounts;
     }
 }
