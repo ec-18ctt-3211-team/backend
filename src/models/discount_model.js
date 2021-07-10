@@ -3,11 +3,10 @@ const mongoose = require("mongoose");
 const discountSchema = mongoose.Schema({
     discountPrice: {
         type: Number,
-        require: true,
+        required: true,
     },
     orderId: {
         type: mongoose.Types.ObjectId,
-        require: true,
         default: null,
     },
     deleteAt: {
@@ -16,11 +15,11 @@ const discountSchema = mongoose.Schema({
     },
     description: {
         type: String,
-        require: true,
+        required: true,
     },
     code: {
         type: String,
-        require: true,
+        required: true,
     },
 });
 

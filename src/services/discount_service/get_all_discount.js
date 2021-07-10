@@ -3,8 +3,13 @@ class GetAllDiscount {
         this.discountDaos = discountDaos;
     }
     async execute() {
-        const discounts = await this.discountDaos.getAll();
-        return discounts;
+        try {
+            const discounts = await this.discountDaos.getAll();
+            if (!discounts) throw new Error("customer not found");
+            return discounts;
+        } catch (error) {
+            return null;
+        }
     }
 }
 

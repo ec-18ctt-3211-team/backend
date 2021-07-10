@@ -27,9 +27,9 @@ const doSth = async () => {
 
   // await dummyCustomer.save();
   const dummyDiscount = new discountModel({
-    discountPrice: "60",
-    description: "Discount 60k",
-    code: "D60K",
+    discountPrice: 80,
+    description: "Discount 80k",
+    code: "D80K",
   });
 
   await dummyDiscount.save();

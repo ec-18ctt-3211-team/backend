@@ -25,7 +25,7 @@ class CustomerController {
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({ valid: true, customers: serviceResult.customer });
         } catch (err) {
-            res.status(400).send({ valid: false, customers: {} });
+            res.status(400).send({ valid: false, customers: null });
         }
     }
 

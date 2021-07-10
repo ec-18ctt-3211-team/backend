@@ -3,8 +3,13 @@ class GetAllCustomer {
         this.customerDaos = customerDaos;
     }
     async execute() {
-        const customers = await this.customerDaos.getAll();
-        return customers;
+        try {
+            const customers = await this.customerDaos.getAll();
+            if (!customers) throw new Error("customer not found");
+            return customers;
+        } catch (error) {
+            return null;
+        }
     }
 }
 
