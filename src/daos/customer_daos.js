@@ -29,7 +29,7 @@ class CustomerDaos {
             phone: phone,
             payment_number: payment_number,
             ci: ci
-        });
+        }, { new: true });
         if (!customer) {
             return {
                 failure: true,
