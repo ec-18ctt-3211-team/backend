@@ -10,6 +10,10 @@ const registerService = require("./services/auth_services/register");
 const authRoutes = require("./routes/auth.routes");
 // Models
 const customerModel = require("./models/customer_model");
+const bookingDateModel = require("./models/booking_date_model")
+const extraPriceModel = require("./models/extra_price_model")
+const photoModel = require("./models/photo_model")
+const roomModel = require("./models/room_model")
 // Controllers
 const authController = require("./controllers/auth.controller");
 // Daos
@@ -35,6 +39,10 @@ container.register({
 
   // models
   customerModel: awilix.asValue(customerModel),
+  bookingDateModel: awilix.asValue(bookingDateModel),
+  extraPriceModel: awilix.asValue(extraPriceModel),
+  photoModel: awilix.asValue(photoModel),
+  roomModel: awilix.asValue(roomModel),
 
   //controllers
   authController: awilix.asClass(authController),
