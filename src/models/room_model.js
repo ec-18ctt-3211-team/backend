@@ -1,18 +1,41 @@
 const mongoose = require("mongoose");
 
+const addressSchema = mongoose.Schema({
+  number: {
+    type: String,
+    required: true
+  },
+  street: {
+    type: String,
+    required: true
+  },
+  ward: {
+    type: String,
+    required: true
+  },
+  district: {
+    type: String,
+    required: true
+  },
+  city: {
+    type: String,
+    required: true
+  }
+}, { _id : false })
+
 const roomSchema = mongoose.Schema({
   host_id: {
     type: mongoose.Types.ObjectId,
     required: true
   },
   address: {
-    type: String,
+    type: addressSchema,
     required: true
   },
   description: {
     type: String,
   },
-  create_at: {
+  created_at: {
     type: String,
     required: true,
     default: new Date().toString().substring(0, 21)
