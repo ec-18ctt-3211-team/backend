@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-module.exports = ({ authRoutes }) => {
+module.exports = ({ authRoutes, roomRoutes }) => {
   const router = express.Router();
   router.use(express.static("public"));
   router.use(cors({ exposedHeaders: "auth-token" }));
@@ -9,5 +9,6 @@ module.exports = ({ authRoutes }) => {
   router.use(express.urlencoded({ extended: true }));
 
   router.use("/auth", authRoutes);
+  router.use("/rooms", roomRoutes);
   return router;
 };

@@ -1,15 +1,18 @@
-class getRoomsByCity {
-  constructor({ authDaos, passwordHasher }) {
-    this.authDaos = authDaos;
-    this.passwordHasher = passwordHasher;
+class GetRoomsByCity {
+  constructor({ roomDaos }) {
+    this.roomDaos = roomDaos;
 
     this.execute = this.execute.bind(this);
   }
 
   async execute(params) {
-    const { city,  } = params;
-    
+    const { city, limit, page } = params;
+    const parsedCity = city.split("-").join(" ");
+    return await this.roomDaos.getByCity(parsedCity, {
+      limit: parseInt(limit),
+      page: parseInt(page),
+    });
   }
 }
 
-module.exports = AuthRegister;
+module.exports = GetRoomsByCity;
