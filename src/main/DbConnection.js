@@ -5,6 +5,7 @@ mongoose.connect(config.Database.connectionString, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+mongoose.set('useFindAndModify', false);
 
 module.exports = mongoose.connection.once("open", () => {
   // eslint-disable-next-line no-console

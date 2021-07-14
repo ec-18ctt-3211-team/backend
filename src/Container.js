@@ -5,6 +5,9 @@ const Server = require("./main/Server");
 const Router = require("./main/Router");
 const DatabaseConection = require("./main/DBConnection");
 // Services
+const getCustomerService = require("./services/customer_services/get_customer");
+const getAllCustomerService = require("./services/customer_services/get_all_customer");
+const updateCustomerService = require("./services/customer_services/update_customer");
 const registerService = require("./services/auth_services/register");
 const getRoomByIdService = require("./services/room_services/get_room_by_id");
 const getRoomsByCityService = require("./services/room_services/get_rooms_by_city");
@@ -23,6 +26,22 @@ const roomController = require("./controllers/room_controller");
 // Daos
 const authDaos = require("./daos/auth_daos");
 const roomDaos = require("./daos/room_daos");
+const getAllDiscountService = require("./services/discount_service/get_all_discount");
+// Routes
+const authRoutes = require("./routes/auth.routes");
+const customerRoutes = require("./routes/customer_routes")
+const discountRoutes = require("./routes/discount_routes");
+// Models
+const customerModel = require("./models/customer_model");
+const discountModel = require("./models/discount_model");
+// Controllers
+const authController = require("./controllers/auth.controller");
+const customerController = require("./controllers/customer_controllers");
+const discountController = require("./controllers/discount_controller");
+// Daos
+const customerDaos = require("./daos/customer_daos");
+const authDaos = require("./daos/auth.daos");
+const discountDaos = require("./daos/discount_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 // Mappers
@@ -40,10 +59,16 @@ container.register({
   registerService: awilix.asClass(registerService),
   getRoomByIdService: awilix.asClass(getRoomByIdService),
   getRoomsByCityService: awilix.asClass(getRoomsByCityService),
+  getCustomerService: awilix.asClass(getCustomerService),
+  getAllCustomerService: awilix.asClass(getAllCustomerService),
+  updateCustomerService: awilix.asClass(updateCustomerService),
+  getAllDiscountService: awilix.asClass(getAllDiscountService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),
   roomRoutes: awilix.asFunction(roomRoutes),
+  customerRoutes: awilix.asFunction(customerRoutes),
+  discountRoutes: awilix.asFunction(discountRoutes),
 
   // models
   customerModel: awilix.asValue(customerModel),
@@ -51,14 +76,19 @@ container.register({
   extraPriceModel: awilix.asValue(extraPriceModel),
   photoModel: awilix.asValue(photoModel),
   roomModel: awilix.asValue(roomModel),
+  discountModel: awilix.asValue(discountModel),
 
   //controllers
   authController: awilix.asClass(authController),
   roomController: awilix.asClass(roomController),
+  customerController: awilix.asClass(customerController),
+  discountController: awilix.asClass(discountController),
 
   // daos
   authDaos: awilix.asClass(authDaos),
   roomDaos: awilix.asClass(roomDaos),
+  customerDaos: awilix.asClass(customerDaos),
+  discountDaos: awilix.asClass(discountDaos),
 
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),
