@@ -3,28 +3,28 @@ const mongoose = require("mongoose");
 const customerSchema = mongoose.Schema({
   email: {
     type: String,
-    require: true,
+    required: true,
   },
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
   phone: {
     type: String,
-    require: true,
+    required: true,
   },
   ava: {
     type: String,
-    require: true,
+    required: true,
     default: "/images/defaultAva.png",
   },
   is_host: {
     type: Boolean,
-    require: true,
+    required: true,
     default: false,
   },
   payment_number: {
