@@ -1,6 +1,9 @@
 class RoomDaos {
-  constructor({ roomModel }) {
+  constructor({ roomModel, bookingDateDaos, extraPriceDaos, photoDaos }) {
     this.roomModel = roomModel;
+    this.bookingDateDaos = bookingDateDaos;
+    this.extraPriceDaos = extraPriceDaos;
+    this.photoDaos = photoDaos;
 
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
@@ -31,7 +34,18 @@ class RoomDaos {
   async getById(id) {
     try {
       const room = await this.roomModel.findById(id);
-      return { room };
+      if (room == null) throw new Error('Resource not found');
+      const bookingDates = await this.bookingDateDaos.getByRoomId(room._id)
+      const photos = await this.photoDaos.getByRoomId(room._id)
+      const extraPrices = await this.extraPriceDaos.getByRoomId(room._id)
+      return {
+        room: {
+          ...room,
+          bookingDates: bookingDates,
+          photos: photos,
+          extraPrices: extraPrices
+        }
+      };
     } catch (err) {
       return { failure: true, message: err.message };
     }

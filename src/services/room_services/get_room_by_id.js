@@ -9,7 +9,7 @@ class GetRoomById {
     try {
       const { id } = params;
       const result = await this.roomDaos.getById(id);
-      if (result.room == null) throw new Error("Resource not found");
+      if (result.failure) throw new Error(result.message);
       return result;
     } catch (err) {
       return { failure: true, message: err.message };
