@@ -7,6 +7,7 @@ class RoomDaos {
 
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
+    this.getByCustomer = this.getByCustomer.bind(this);
   }
 
   async getByCity(city, config = {}) {
@@ -46,6 +47,15 @@ class RoomDaos {
           extraPrices: extraPrices,
         },
       };
+    } catch (err) {
+      return { failure: true, message: err.message };
+    }
+  }
+
+  async getByCustomer(host_id) {
+    try {
+      const rooms = await this.roomModel.find({ host_id });
+      return { rooms };
     } catch (err) {
       return { failure: true, message: err.message };
     }

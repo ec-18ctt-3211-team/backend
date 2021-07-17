@@ -11,11 +11,12 @@ const updateCustomerService = require("./services/customer_services/update_custo
 const registerService = require("./services/auth_services/register");
 const getRoomByIdService = require("./services/room_services/get_room_by_id");
 const getRoomsByCityService = require("./services/room_services/get_rooms_by_city");
+const getRoomByCustomerService = require("./services/customer_services/get_rooms_by_customer");
 // Routes
 const authRoutes = require("./routes/auth_routes");
 const roomRoutes = require("./routes/room_routes");
 const customerRoutes = require("./routes/customer_routes");
-const discountRoutes = require("./routes/discount_routes")
+const discountRoutes = require("./routes/discount_routes");
 // Models
 const customerModel = require("./models/customer_model");
 const bookingDateModel = require("./models/booking_date_model");
@@ -36,7 +37,7 @@ const customerDaos = require("./daos/customer_daos");
 const discountDaos = require("./daos/discount_daos");
 const photoDaos = require("./daos/photo_daos");
 const extraPriceDaos = require("./daos/extra_price_daos");
-const bookingDateDaos = require("./daos/booking_date_daos")
+const bookingDateDaos = require("./daos/booking_date_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 // Mappers
@@ -58,6 +59,7 @@ container.register({
   getAllCustomerService: awilix.asClass(getAllCustomerService),
   updateCustomerService: awilix.asClass(updateCustomerService),
   getAllDiscountService: awilix.asClass(getAllDiscountService),
+  getRoomByCustomerService: awilix.asClass(getRoomByCustomerService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),
