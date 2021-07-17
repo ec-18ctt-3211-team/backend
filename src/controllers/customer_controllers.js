@@ -59,12 +59,13 @@ class CustomerController {
 
   async rooms(req, res) {
     try {
-      const params = req.params;
+      const params = { ...req.params, ...req.query };
       const serviceResult = await this.getRoomByCustomerService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({
         valid: true,
         rooms: serviceResult.rooms,
+        total: serviceResult.total,
       });
     } catch (err) {
       res.status(400).send({ valid: false, message: err.message });

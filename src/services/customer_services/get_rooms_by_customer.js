@@ -6,8 +6,8 @@ class GetRoomsByCustomer {
   }
 
   async execute(params) {
-    const { id } = params;
-    const result = await this.roomDaos.getByCustomer(id);
+    const { id, limit, page } = params;
+    const result = await this.roomDaos.getByCustomer(id, { limit, page });
     if (result.failure) return { failure: true, message: result.message };
     return result;
   }
