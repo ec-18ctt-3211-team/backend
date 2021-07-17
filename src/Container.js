@@ -10,6 +10,7 @@ const getAllCustomerService = require("./services/customer_services/get_all_cust
 const updateCustomerService = require("./services/customer_services/update_customer");
 const registerService = require("./services/auth_services/register");
 const getAllDiscountService = require("./services/discount_service/get_all_discount");
+const loginService = require("./services/auth_services/login");
 // Routes
 const authRoutes = require("./routes/auth.routes");
 const customerRoutes = require("./routes/customer_routes")
@@ -27,6 +28,7 @@ const authDaos = require("./daos/auth.daos");
 const discountDaos = require("./daos/discount_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
+const authentication = require("./ultils/authentication");
 // Mappers
 
 const container = awilix.createContainer();
@@ -44,6 +46,7 @@ container.register({
   getAllCustomerService: awilix.asClass(getAllCustomerService),
   updateCustomerService: awilix.asClass(updateCustomerService),
   getAllDiscountService: awilix.asClass(getAllDiscountService),
+  loginService: awilix.asClass(loginService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),
@@ -66,6 +69,7 @@ container.register({
 
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),
+  authentication: awilix.asClass(authentication),
 
   // mappers
 });
