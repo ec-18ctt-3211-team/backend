@@ -34,17 +34,17 @@ class RoomDaos {
   async getById(id) {
     try {
       const room = await this.roomModel.findById(id);
-      if (room == null) throw new Error('Resource not found');
-      const bookingDates = await this.bookingDateDaos.getByRoomId(room._id)
-      const photos = await this.photoDaos.getByRoomId(room._id)
-      const extraPrices = await this.extraPriceDaos.getByRoomId(room._id)
+      if (room == null) throw new Error("Resource not found");
+      const bookingDates = await this.bookingDateDaos.getByRoomId(room._id);
+      const photos = await this.photoDaos.getByRoomId(room._id);
+      const extraPrices = await this.extraPriceDaos.getByRoomId(room._id);
       return {
         room: {
-          ...room,
+          ...room._doc,
           bookingDates: bookingDates,
           photos: photos,
-          extraPrices: extraPrices
-        }
+          extraPrices: extraPrices,
+        },
       };
     } catch (err) {
       return { failure: true, message: err.message };

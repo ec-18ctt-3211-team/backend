@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 const extraPriceSchema = mongoose.Schema({
   room_id: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
   },
   date: {
     type: String,
-    required: true
+    required: true,
   },
   price: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Extra price", extraPriceSchema);

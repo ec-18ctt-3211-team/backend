@@ -7,7 +7,7 @@ class GetRoomsByCity {
 
   async execute(params) {
     const { city, limit, page } = params;
-    const parsedCity = city.split("-").join(" ");
+    const parsedCity = city.split("_").join(" ");
     return await this.roomDaos.getByCity(parsedCity, {
       limit: parseInt(limit),
       page: parseInt(page),
