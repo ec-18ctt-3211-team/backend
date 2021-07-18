@@ -3,7 +3,7 @@ const awilix = require("awilix");
 const App = require("./main/App");
 const Server = require("./main/Server");
 const Router = require("./main/Router");
-const DatabaseConection = require("./main/DBConnection");
+const DatabaseConection = require("./main/DbConnection");
 // Services
 const getCustomerService = require("./services/customer_services/get_customer");
 const getAllCustomerService = require("./services/customer_services/get_all_customer");
