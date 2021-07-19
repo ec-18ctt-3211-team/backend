@@ -6,6 +6,7 @@ module.exports = ({ customerController }) => {
   router.get("/:id", customerController.show);
   router.get("/", customerController.index);
   router.put("/:id", customerController.update);
+  router.get("/:id/rooms", customerController.rooms);
 
   return router;
 };
