@@ -10,7 +10,7 @@ const getAllCustomerService = require("./services/customer_services/get_all_cust
 const updateCustomerService = require("./services/customer_services/update_customer");
 const registerService = require("./services/auth_services/register");
 const getRoomByIdService = require("./services/room_services/get_room_by_id");
-const getRoomsByCityService = require("./services/room_services/get_rooms_by_city");
+const getRoomsService = require("./services/room_services/get_rooms");
 const getRoomByCustomerService = require("./services/customer_services/get_rooms_by_customer");
 // Routes
 const authRoutes = require("./routes/auth_routes");
@@ -54,7 +54,7 @@ container.register({
   // services
   registerService: awilix.asClass(registerService),
   getRoomByIdService: awilix.asClass(getRoomByIdService),
-  getRoomsByCityService: awilix.asClass(getRoomsByCityService),
+  getRoomsService: awilix.asClass(getRoomsService),
   getCustomerService: awilix.asClass(getCustomerService),
   getAllCustomerService: awilix.asClass(getAllCustomerService),
   updateCustomerService: awilix.asClass(updateCustomerService),

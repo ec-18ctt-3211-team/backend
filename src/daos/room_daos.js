@@ -5,15 +5,35 @@ class RoomDaos {
     this.extraPriceDaos = extraPriceDaos;
     this.photoDaos = photoDaos;
 
+    this.getAll = this.getAll.bind(this);
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
     this.getByCustomer = this.getByCustomer.bind(this);
+  }
+  async getAll(config = {}) {
+    try {
+      const { limit, page } = config;
+      const skipRows = limit * (page-1);
+      let rooms;
+      if (limit != NaN && page != NaN) {
+        rooms = await this.roomModel
+          .find({})
+          .limit(limit)
+          .skip(skipRows);
+      } else {
+        rooms = this.roomModel.find({});
+      }
+      const total = await this.roomModel.countDocuments({})
+      return { rooms, total }
+    } catch(err) {
+      return { failure: true, message: err.message }
+    }
   }
 
   async getByCity(city, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * page;
+      const skipRows = limit * (page-1);
       let rooms;
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel

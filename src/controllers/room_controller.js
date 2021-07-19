@@ -1,6 +1,6 @@
 class RoomController {
-  constructor({ getRoomsByCityService, getRoomByIdService }) {
-    this.getRoomsByCityService = getRoomsByCityService;
+  constructor({ getRoomsService, getRoomByIdService }) {
+    this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
 
     this.index = this.index.bind(this);
@@ -10,7 +10,7 @@ class RoomController {
   async index(req, res) {
     try {
       const params = { ...req.query };
-      const serviceResult = await this.getRoomsByCityService.execute(params);
+      const serviceResult = await this.getRoomsService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({
         valid: true,
