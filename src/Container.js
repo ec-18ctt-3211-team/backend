@@ -34,7 +34,6 @@ const discountController = require("./controllers/discount_controller");
 // Daos
 const authDaos = require("./daos/auth_daos");
 const roomDaos = require("./daos/room_daos");
-const getAllDiscountService = require("./services/discount_service/get_all_discount");
 const customerDaos = require("./daos/customer_daos");
 const discountDaos = require("./daos/discount_daos");
 const photoDaos = require("./daos/photo_daos");
