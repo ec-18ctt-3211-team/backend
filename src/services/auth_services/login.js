@@ -25,6 +25,7 @@ class AuthLogin {
         return {
             token: this.authentication.sign(stringUser),
             userId: user.id,
+            name: user.name,
             ava: user.ava,
             host: user.is_host,
         };

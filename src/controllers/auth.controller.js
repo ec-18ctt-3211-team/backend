@@ -27,6 +27,7 @@ class AuthController {
       res.status(200).header("token", serviceResult.token).send({
         valid: true,
         userId: serviceResult.userId,
+        name: serviceResult.name,
         ava: serviceResult.ava,
         host: serviceResult.host,
       });
