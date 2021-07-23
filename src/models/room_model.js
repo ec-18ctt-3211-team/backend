@@ -1,36 +1,39 @@
 const mongoose = require("mongoose");
 
-const addressSchema = mongoose.Schema({
-  number: {
-    type: String,
-    required: true
+const addressSchema = mongoose.Schema(
+  {
+    number: {
+      type: String,
+      required: true,
+    },
+    street: {
+      type: String,
+      required: true,
+    },
+    ward: {
+      type: String,
+      required: true,
+    },
+    district: {
+      type: String,
+      required: true,
+    },
+    city: {
+      type: String,
+      required: true,
+    },
   },
-  street: {
-    type: String,
-    required: true
-  },
-  ward: {
-    type: String,
-    required: true
-  },
-  district: {
-    type: String,
-    required: true
-  },
-  city: {
-    type: String,
-    required: true
-  }
-}, { _id : false })
+  { _id: false }
+);
 
 const roomSchema = mongoose.Schema({
   host_id: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
   },
   address: {
     type: addressSchema,
-    required: true
+    required: true,
   },
   description: {
     type: String,
@@ -38,20 +41,33 @@ const roomSchema = mongoose.Schema({
   created_at: {
     type: String,
     required: true,
-    default: new Date().toString().substring(0, 21)
+    default: new Date().toString().substring(0, 21),
   },
   normal_price: {
     type: Number,
-    required: true
+    required: true,
   },
   weekend_price: {
     type: Number,
-    required: true
+    required: true,
   },
   deleted_at: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  max_guest: {
+    type: Number,
+    required: true,
+  },
+  thumnail: {
+    type: String,
+    required: true,
+    default: "/no-thumnail.jpeg",
+  },
 });
 
 module.exports = mongoose.model("Room", roomSchema);
