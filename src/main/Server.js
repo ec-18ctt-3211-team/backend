@@ -11,7 +11,7 @@ class Server {
   }
 
   start() {
-    const server = this.app.listen(this.PORT, "0.0.0.0", () => {
+    const server = this.app.listen(process.env.PORT || this.PORT, "0.0.0.0", () => {
       console.log(`Server is running on port ${this.PORT}`);
     });
     server.timeout = config.Server.TIMEOUT;
