@@ -14,6 +14,7 @@ module.exports = class Authentication {
         return token;
     }
 
+    // FE -> request -> middlesware1 ->  Controller(BE)
     verify(req, res, next) {
         const token = req.header("token");
         if (!token) return res.status(401).send("Acess denined");

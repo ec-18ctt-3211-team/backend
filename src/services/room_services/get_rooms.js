@@ -1,7 +1,6 @@
 class GetRooms {
   constructor({ roomDaos }) {
     this.roomDaos = roomDaos;
-
     this.execute = this.execute.bind(this);
   }
 
