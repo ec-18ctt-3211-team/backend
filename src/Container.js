@@ -16,6 +16,7 @@ const getAllDiscountService = require("./services/discount_service/get_all_disco
 const loginService = require("./services/auth_services/login");
 const getAllOrdersService = require("./services/order_service/get_all_orders")
 const createOrderService = require("./services/order_service/create_order")
+const updateOrderService = require("./services/order_service/update_order")
 // Routes
 const authRoutes = require("./routes/auth_routes");
 const roomRoutes = require("./routes/room_routes");
@@ -71,6 +72,7 @@ container.register({
   loginService: awilix.asClass(loginService),
   getAllOrdersService: awilix.asClass(getAllOrdersService),
   createOrderService: awilix.asClass(createOrderService),
+  updateOrderService: awilix.asClass(updateOrderService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),

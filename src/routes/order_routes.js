@@ -3,8 +3,9 @@ const express = require("express");
 module.exports = ({ orderController }) => {
     const router = express.Router();
 
-    router.post("/create", orderController.create);
-    router.post("/", orderController.index);
+    router.post("/", orderController.create);
+    router.get("/", orderController.index);
+    router.put("/:id", orderController.update);
 
     return router;
 };

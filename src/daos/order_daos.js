@@ -4,6 +4,7 @@ class OrderDaos {
 
     this.getAll = this.getAll.bind(this);
     this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
   }
 
   async getAll(config = {}) {
@@ -31,6 +32,16 @@ class OrderDaos {
       const newOrder = await this.orderModel.insertMany(params)
       if (!newOrder) throw new Error("Create order failed")
       return { newOrder };
+    } catch(err) {
+      return { failure: true, message: err.message }
+    }
+  }
+
+  async update(params) {
+    try {
+      const { id, status } = params;
+      const updatedOrder = await this.orderModel.findByIdAndUpdate(id, { status: status }, { new: true });
+      return { updatedOrder };
     } catch(err) {
       return { failure: true, message: err.message }
     }
