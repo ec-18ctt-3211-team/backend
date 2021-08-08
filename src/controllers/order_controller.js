@@ -11,7 +11,7 @@ class OrderController {
 
   async index(req, res) {
     try {
-      const params = { ...req.query }
+      const params = { ...req.query, ...req.params }
       const serviceResult = await this.getAllOrders.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({

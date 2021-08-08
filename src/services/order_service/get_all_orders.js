@@ -4,8 +4,11 @@ class GetAllOrders {
   }
   async execute(params) {
     try {
-      const { limit, page } = params
-      const orders = await this.orderDaos.getAll({ limit: parseInt(limit), page: parseInt(page) });
+      const { limit, page, host_id } = params
+      const orders = await this.orderDaos.getAll(
+        host_id,
+        { limit: parseInt(limit), page: parseInt(page) }
+      );
       if (!orders) throw new Error("orders not found");
       return orders;
     } catch (error) {
