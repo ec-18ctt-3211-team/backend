@@ -13,12 +13,8 @@ class CustomerDaos {
     }
 
     async getById(id) {
-        try {
-            const customer = await this.customerModel.findById(id);
-            return { customer };
-        } catch (err) {
-            return { failure: true, message: "Something went wrong" }
-        }
+        const customer = await this.customerModel.findById(id);
+        return { customer };
     }
 
     async updateById(id, email, name, password, phone, payment_number, ci) {
@@ -30,12 +26,6 @@ class CustomerDaos {
             payment_number: payment_number,
             ci: ci
         }, { new: true });
-        if (!customer) {
-            return {
-                failure: true,
-                message: "Customer not found",
-            };
-        }
         return { customer };
     }
 }

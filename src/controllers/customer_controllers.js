@@ -15,7 +15,7 @@ class CustomerController {
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({ valid: true, customer: serviceResult.customer });
         } catch (err) {
-            res.status(400).send({ valid: false, customer: null });
+            res.status(400).send({ valid: false, message: err.message  });
         }
     }
 
@@ -25,7 +25,7 @@ class CustomerController {
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({ valid: true, customers: serviceResult.customer });
         } catch (err) {
-            res.status(400).send({ valid: false, customers: null });
+            res.status(400).send({ valid: false, message: err.message });
         }
     }
 
@@ -40,7 +40,7 @@ class CustomerController {
                 updateCustomer: serviceResult.customer, message: "updated successfully"
             });
         } catch (err) {
-            res.status(400).send({ valid: false, updateCustomer: null, message: err.message });
+            res.status(400).send({ valid: false, message: err.message });
         }
     }
 }
