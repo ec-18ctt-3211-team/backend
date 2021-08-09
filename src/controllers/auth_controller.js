@@ -32,7 +32,7 @@ class AuthController {
         host: serviceResult.host,
       });
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message });
+      res.status(401).send({ valid: false, message: err.message });
     }
   }
 }
