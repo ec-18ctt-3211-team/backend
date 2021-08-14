@@ -13,17 +13,17 @@ class CityDaos {
     try {
       const { limit, page } = config;
       const skipRows = limit * (page - 1)
-      let citys;
+      let cities;
       if (!isNaN(limit) && !isNaN(page)) {
-        citys = await this.cityModel
+        cities = await this.cityModel
           .find({})
           .limit(limit)
           .skip(skipRows);
       } else {
-        citys = await this.cityModel.find({});
+        cities = await this.cityModel.find({});
       }
       const total = await this.cityModel.estimatedDocumentCount();
-      return { citys, total };
+      return { cities, total };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
@@ -33,17 +33,17 @@ class CityDaos {
     try {
       const { limit, page } = config;
       const skipRows = limit * (page - 1)
-      let citys;
+      let cities;
       if (!isNaN(limit) && !isNaN(page)) {
-        citys = await this.cityModel
+        cities = await this.cityModel
           .find({ is_pinned: true })
           .limit(limit)
           .skip(skipRows);
       } else {
-        citys = await this.cityModel.find({ is_pinned: true });
+        cities = await this.cityModel.find({ is_pinned: true });
       }
       const total = await this.cityModel.countDocuments({ is_pinned: true });
-      return { citys, total }
+      return { cities, total }
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
@@ -70,7 +70,7 @@ class CityDaos {
 
   async update(id, titles, thumnail, is_pinned) {
     try {
-      console.log(id, titles,thumnail,is_pinned);
+      console.log(id, titles, thumnail, is_pinned);
       const updatedCity = await this.cityModel.findOneAndUpdate({ id: id }, {
         titles: titles,
         thumnail: thumnail,

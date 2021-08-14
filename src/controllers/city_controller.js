@@ -1,13 +1,13 @@
 class CityController {
     constructor(
         {
-            getAllCitysService,
+            getAllCitiesService,
             getCityByIdService,
             getCityIsPinnedService,
             createCityService,
             updateCityService
         }) {
-        this.getAllCitysService = getAllCitysService;
+        this.getAllCitiesService = getAllCitiesService;
         this.getCityByIdService = getCityByIdService;
         this.getCityIsPinnedService = getCityIsPinnedService;
         this.createCityService = createCityService;
@@ -23,11 +23,11 @@ class CityController {
     async index(req, res) {
         try {
             const params = { ...req.query };
-            const serviceResult = await this.getAllCitysService.execute(params);
+            const serviceResult = await this.getAllCitiesService.execute(params);
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
-                citys: serviceResult.citys,
+                cities: serviceResult.cities,
                 total: serviceResult.total,
             });
         } catch (err) {
@@ -42,7 +42,7 @@ class CityController {
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
-                citys: serviceResult.citys,
+                cities: serviceResult.cities,
                 total: serviceResult.total,
             });
         } catch (err) {

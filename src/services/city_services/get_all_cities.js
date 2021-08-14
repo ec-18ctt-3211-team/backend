@@ -1,4 +1,4 @@
-class GetAllCitys {
+class GetAllCities {
     constructor({ cityDaos }) {
         this.cityDaos = cityDaos;
 
@@ -20,4 +20,4 @@ class GetAllCitys {
     }
 }
 
-module.exports = GetAllCitys;
+module.exports = GetAllCities;

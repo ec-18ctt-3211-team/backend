@@ -17,7 +17,7 @@ const loginService = require("./services/auth_services/login");
 const getAllOrdersService = require("./services/order_service/get_all_orders")
 const createOrderService = require("./services/order_service/create_order")
 const updateOrderService = require("./services/order_service/update_order")
-const getAllCitysService = require("./services/city_services/get_all_citys");
+const getAllCitiesService = require("./services/city_services/get_all_cities");
 const getCityIsPinnedService = require("./services/city_services/get_city_is_pinned");
 const getCityByIdService = require("./services/city_services/get_city_by_id");
 const createCityService = require("./services/city_services/create_city");
@@ -82,7 +82,7 @@ container.register({
   getAllOrdersService: awilix.asClass(getAllOrdersService),
   createOrderService: awilix.asClass(createOrderService),
   updateOrderService: awilix.asClass(updateOrderService),
-  getAllCitysService: awilix.asClass(getAllCitysService),
+  getAllCitiesService: awilix.asClass(getAllCitiesService),
   getCityIsPinnedService: awilix.asClass(getCityIsPinnedService),
   getCityByIdService: awilix.asClass(getCityByIdService),
   createCityService: awilix.asClass(createCityService),
