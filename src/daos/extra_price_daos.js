@@ -5,7 +5,7 @@ class ExtraPriceDaos {
 
   async getByRoomId(roomId) {
     try {
-      const extra_prices = await this.extraPriceModel.find({room_id: roomId});
+      const extra_prices = await this.extraPriceModel.find({ room_id: roomId });
       return extra_prices;
     } catch (err) {
       return { failure: true, message: "Something went wrong" };

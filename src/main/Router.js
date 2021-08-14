@@ -2,10 +2,11 @@ const express = require("express");
 const cors = require("cors");
 
 module.exports = ({
-  authRoutes,
-  customerRoutes,
-  discountRoutes,
-  roomRoutes,
+    authRoutes,
+    customerRoutes,
+    discountRoutes,
+    roomRoutes,
+    orderRoutes
 }) => {
   const router = express.Router();
   router.use(express.static("public"));
@@ -17,5 +18,6 @@ module.exports = ({
   router.use("/rooms", roomRoutes);
   router.use("/customer", customerRoutes);
   router.use("/discount", discountRoutes);
+  router.use("/order", orderRoutes);
   return router;
 };

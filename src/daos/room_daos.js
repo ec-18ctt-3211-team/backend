@@ -75,7 +75,7 @@ class RoomDaos {
   async getByCustomer(host_id, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * page;
+      const skipRows = limit * (page-1);
       let rooms;
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel
