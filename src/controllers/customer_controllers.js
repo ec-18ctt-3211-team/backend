@@ -37,7 +37,7 @@ class CustomerController {
                 total: serviceResult.total,
             });
         } catch (err) {
-            res.status(400).send({ valid: false, customer: null });
+            res.status(400).send({ valid: false, message: err.message });
         }
     }
 
