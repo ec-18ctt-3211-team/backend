@@ -54,7 +54,7 @@ class CityDaos {
       const city = this.cityModel.find({ id });
       return city;
     } catch (err) {
-      return { failure: true, message: "Something went wrong" };
+      return { failure: true, message: err.message || "Something went wrong" };
     }
   }
 
@@ -64,7 +64,7 @@ class CityDaos {
       if (!newModel) throw new Error("Create model failed")
       return { newCity: newModel[0] };
     } catch (err) {
-      return { failure: true, message: err.message }
+      return { failure: true, message: err.message || "Something went wrong" }
     }
   }
 
@@ -78,7 +78,7 @@ class CityDaos {
       }, { new: true });
       return updatedCity;
     } catch (err) {
-      return { failure: true, message: err.message }
+      return { failure: true, message: err.message || "Something went wrong" }
     }
   }
 }
