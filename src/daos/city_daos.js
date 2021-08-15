@@ -37,8 +37,7 @@ class CityDaos {
       const cities = await this.cityModel
         .find({ is_pinned: true })
         .select('-_id');
-
-      return { cities }
+      return { cities };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
