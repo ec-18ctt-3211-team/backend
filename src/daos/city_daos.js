@@ -17,10 +17,13 @@ class CityDaos {
       if (!isNaN(limit) && !isNaN(page)) {
         cities = await this.cityModel
           .find({})
+          .select('-_id')
           .limit(limit)
           .skip(skipRows);
       } else {
-        cities = await this.cityModel.find({});
+        cities = await this.cityModel
+          .find({})
+          .select('-_id');
       }
       const total = await this.cityModel.estimatedDocumentCount();
       return { cities, total };
@@ -29,21 +32,13 @@ class CityDaos {
     }
   }
 
-  async getIsPinned(config = {}) {
+  async getIsPinned() {
     try {
-      const { limit, page } = config;
-      const skipRows = limit * (page - 1)
-      let cities;
-      if (!isNaN(limit) && !isNaN(page)) {
-        cities = await this.cityModel
-          .find({ is_pinned: true })
-          .limit(limit)
-          .skip(skipRows);
-      } else {
-        cities = await this.cityModel.find({ is_pinned: true });
-      }
-      const total = await this.cityModel.countDocuments({ is_pinned: true });
-      return { cities, total }
+      const cities = await this.cityModel
+        .find({ is_pinned: true })
+        .select('-_id');
+
+      return { cities }
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
@@ -51,8 +46,10 @@ class CityDaos {
 
   async getById(id) {
     try {
-      const city = this.cityModel.find({ id });
-      return city;
+      const city = await this.cityModel
+        .find({ id })
+        .select('-_id');
+      return { city };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
@@ -70,13 +67,14 @@ class CityDaos {
 
   async update(id, titles, thumnail, is_pinned) {
     try {
-      console.log(id, titles, thumnail, is_pinned);
-      const updatedCity = await this.cityModel.findOneAndUpdate({ id: id }, {
-        titles: titles,
-        thumnail: thumnail,
-        is_pinned: is_pinned,
-      }, { new: true });
-      return updatedCity;
+      const updatedCity = await this.cityModel
+        .findOneAndUpdate({ id: id }, {
+          titles: titles,
+          thumnail: thumnail,
+          is_pinned: is_pinned,
+        }, { new: true })
+        .select('-_id');
+      return { updatedCity };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" }
     }

@@ -9,7 +9,7 @@ class GetCityById {
         try {
             const { id } = params;
             const daosResult = await this.cityDaos.getById(id);
-            if (daosResult.failure || !daosResult.length) throw new Error(daosResult.message || "City is not found");
+            if (daosResult.failure || !daosResult.city.length) throw new Error(daosResult.message || "City is not found");
             return daosResult;
         } catch (err) {
             return { failure: true, message: err.message };

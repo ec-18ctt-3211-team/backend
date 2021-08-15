@@ -7,11 +7,7 @@ class GetCityIsPinned {
 
     async execute(params) {
         try {
-            const { limit, page } = params
-            const daosResult = await this.cityDaos.getIsPinned({
-                limit: parseInt(limit),
-                page: parseInt(page),
-            });
+            const daosResult = await this.cityDaos.getIsPinned();
             if (daosResult.failure) throw new Error(daosResult.message);
             return daosResult;
         } catch (error) {

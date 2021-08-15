@@ -26,8 +26,7 @@ const citySchema = mongoose.Schema(
             required: true,
             default: false,
         },
-    },
-    { _id: false }
+    }
 );
 
 module.exports = mongoose.model("City", citySchema);

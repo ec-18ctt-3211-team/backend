@@ -14,7 +14,7 @@ class CityController {
         this.updateCityService = updateCityService;
 
         this.index = this.index.bind(this);
-        this.indexPinned = this.indexPinned.bind(this);
+        this.pinned = this.pinned.bind(this);
         this.show = this.show.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
@@ -35,15 +35,13 @@ class CityController {
         }
     }
 
-    async indexPinned(req, res) {
+    async pinned(req, res) {
         try {
-            const params = { ...req.query };
-            const serviceResult = await this.getCityIsPinnedService.execute(params);
+            const serviceResult = await this.getCityIsPinnedService.execute();
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
                 cities: serviceResult.cities,
-                total: serviceResult.total,
             });
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message });
@@ -57,7 +55,7 @@ class CityController {
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
-                city: serviceResult,
+                city: serviceResult.city,
             });
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message });
@@ -79,9 +77,8 @@ class CityController {
         try {
             const params = { ...req.params, ...req.body };
             const serviceResult = await this.updateCityService.execute(params);
-            console.log(serviceResult);
             if (serviceResult.failure) throw new Error(serviceResult.message)
-            res.status(200).send({ valid: true, updatedCity: serviceResult })
+            res.status(200).send({ valid: true, updatedCity: serviceResult.updatedCity })
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message })
         }
