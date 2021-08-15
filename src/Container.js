@@ -17,12 +17,18 @@ const loginService = require("./services/auth_services/login");
 const getAllOrdersService = require("./services/order_service/get_all_orders")
 const createOrderService = require("./services/order_service/create_order")
 const updateOrderService = require("./services/order_service/update_order")
+const getAllCitiesService = require("./services/city_services/get_all_cities");
+const getCityIsPinnedService = require("./services/city_services/get_city_is_pinned");
+const getCityByIdService = require("./services/city_services/get_city_by_id");
+const createCityService = require("./services/city_services/create_city");
+const updateCityService = require("./services/city_services/update_city");
 // Routes
 const authRoutes = require("./routes/auth_routes");
 const roomRoutes = require("./routes/room_routes");
 const customerRoutes = require("./routes/customer_routes");
 const discountRoutes = require("./routes/discount_routes");
 const orderRoutes = require("./routes/order_routes")
+const cityRoutes = require("./routes/city_routes");
 // Models
 const customerModel = require("./models/customer_model");
 const bookingDateModel = require("./models/booking_date_model");
@@ -31,12 +37,14 @@ const photoModel = require("./models/photo_model");
 const roomModel = require("./models/room_model");
 const discountModel = require("./models/discount_model");
 const orderModel = require("./models/order_model")
+const cityModel = require("./models/city_model");
 // Controllers
 const authController = require("./controllers/auth_controller");
 const roomController = require("./controllers/room_controller");
 const customerController = require("./controllers/customer_controllers");
 const discountController = require("./controllers/discount_controller");
 const orderController = require("./controllers/order_controller")
+const cityController = require("./controllers/city_controller");
 // Daos
 const authDaos = require("./daos/auth_daos");
 const roomDaos = require("./daos/room_daos");
@@ -46,6 +54,7 @@ const photoDaos = require("./daos/photo_daos");
 const extraPriceDaos = require("./daos/extra_price_daos");
 const bookingDateDaos = require("./daos/booking_date_daos");
 const orderDaos = require("./daos/order_daos")
+const cityDaos = require("./daos/city_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
@@ -73,6 +82,11 @@ container.register({
   getAllOrdersService: awilix.asClass(getAllOrdersService),
   createOrderService: awilix.asClass(createOrderService),
   updateOrderService: awilix.asClass(updateOrderService),
+  getAllCitiesService: awilix.asClass(getAllCitiesService),
+  getCityIsPinnedService: awilix.asClass(getCityIsPinnedService),
+  getCityByIdService: awilix.asClass(getCityByIdService),
+  createCityService: awilix.asClass(createCityService),
+  updateCityService: awilix.asClass(updateCityService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),
@@ -80,6 +94,7 @@ container.register({
   customerRoutes: awilix.asFunction(customerRoutes),
   discountRoutes: awilix.asFunction(discountRoutes),
   orderRoutes: awilix.asFunction(orderRoutes),
+  cityRoutes: awilix.asFunction(cityRoutes),
 
   // models
   customerModel: awilix.asValue(customerModel),
@@ -89,6 +104,7 @@ container.register({
   roomModel: awilix.asValue(roomModel),
   discountModel: awilix.asValue(discountModel),
   orderModel: awilix.asValue(orderModel),
+  cityModel: awilix.asValue(cityModel),
 
   //controllers
   authController: awilix.asClass(authController),
@@ -96,6 +112,7 @@ container.register({
   customerController: awilix.asClass(customerController),
   discountController: awilix.asClass(discountController),
   orderController: awilix.asClass(orderController),
+  cityController: awilix.asClass(cityController),
 
   // daos
   authDaos: awilix.asClass(authDaos),
@@ -106,6 +123,7 @@ container.register({
   extraPriceDaos: awilix.asClass(extraPriceDaos),
   bookingDateDaos: awilix.asClass(bookingDateDaos),
   orderDaos: awilix.asClass(orderDaos),
+  cityDaos: awilix.asClass(cityDaos),
 
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),
