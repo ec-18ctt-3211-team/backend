@@ -5,13 +5,13 @@ class GetCustomer {
     async execute(params) {
         try {
             const { id } = params;
-            const customer = await this.customerDaos.getById(id);
-            if (!customer) throw new Error("customer not found");
-            return customer;
-        } catch (error) {
-            return null;
+            const daosResult = await this.customerDaos.getById(id);
+            if (!daosResult) throw new Error("Customer is not found");
+            else if (daosResult.failure) throw new Error(daosResult.message);
+            return daosResult;
+        } catch (err) {
+            return { failure: true, message: err.message };
         }
-
     }
 }
 

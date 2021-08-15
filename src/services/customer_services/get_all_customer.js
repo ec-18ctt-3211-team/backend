@@ -2,13 +2,17 @@ class GetAllCustomer {
   constructor({ customerDaos }) {
     this.customerDaos = customerDaos;
   }
-  async execute() {
+  async execute(params) {
     try {
-      const customers = await this.customerDaos.getAll();
-      if (!customers) throw new Error("customer not found");
-      return customers;
+      const { limit, page } = params;
+      const daosResult = await this.customerDaos.getAll({
+        limit: parseInt(limit),
+        page: parseInt(page),
+      });
+      if (daosResult.failure) throw new Error(daosResult.message);
+      return daosResult;
     } catch (error) {
-      return null;
+      return { failure: true, message: error.message };
     }
   }
 }
