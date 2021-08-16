@@ -1,10 +1,17 @@
 class OrderController {
-  constructor({ createOrderService, getAllOrdersService, updateOrderService }) {
+  constructor({
+    createOrderService,
+    getAllOrdersService,
+    getAllOrdersByCustomerIdService,
+    updateOrderService
+  }) {
     this.createOrderService = createOrderService;
     this.getAllOrders = getAllOrdersService;
+    this.getAllOrdersByCustomerIdService = getAllOrdersByCustomerIdService;
     this.updateOrderService = updateOrderService;
 
     this.index = this.index.bind(this);
+    this.indexCustomer = this.indexCustomer.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
   }
@@ -19,7 +26,22 @@ class OrderController {
         orders: serviceResult.orders,
         total: serviceResult.total
       })
-    } catch(err) {
+    } catch (err) {
+      res.status(400).send({ valid: false, message: err.message })
+    }
+  }
+
+  async indexCustomer(req, res) {
+    try {
+      const params = { ...req.query, ...req.params }
+      const serviceResult = await this.getAllOrdersByCustomerIdService.execute(params);
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res.status(200).send({
+        valid: true,
+        orders: serviceResult.orders,
+        total: serviceResult.total
+      })
+    } catch (err) {
       res.status(400).send({ valid: false, message: err.message })
     }
   }
@@ -30,7 +52,7 @@ class OrderController {
       const serviceResult = await this.createOrderService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message)
       res.status(200).send({ valid: true, newOrder: serviceResult.newOrder })
-    } catch(err) {
+    } catch (err) {
       res.status(400).send({ valid: false, message: err.message })
     }
   }
