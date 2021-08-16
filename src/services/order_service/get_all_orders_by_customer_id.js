@@ -2,9 +2,10 @@ class GetAllOrdersByCustomerId {
     constructor({ orderDaos }) {
         this.orderDaos = orderDaos;
     }
-    async execute(params) {
+    async execute(params, query) {
         try {
-            const { limit, page, customer_id } = params
+            const customer_id = params.id;
+            const { limit, page } = query;
             const orders = await this.orderDaos.getAllByCustomerId(
                 customer_id,
                 { limit: parseInt(limit), page: parseInt(page) }
