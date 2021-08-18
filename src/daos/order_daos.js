@@ -3,6 +3,7 @@ class OrderDaos {
     this.orderModel = orderModel;
 
     this.getAll = this.getAll.bind(this);
+    this.getAllByCustomerId = this.getAllByCustomerId.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
   }
@@ -10,7 +11,7 @@ class OrderDaos {
   async getAll(host_id, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * (page-1)
+      const skipRows = limit * (page - 1)
       let orders;
       if (limit != NaN && page != NaN) {
         orders = await this.orderModel
@@ -27,12 +28,32 @@ class OrderDaos {
     }
   }
 
+  async getAllByCustomerId(customer_id, config = {}) {
+    try {
+      const { limit, page } = config;
+      const skipRows = limit * (page - 1)
+      let orders;
+      if (limit != NaN && page != NaN) {
+        orders = await this.orderModel
+          .find({ customer_id })
+          .limit(limit)
+          .skip(skipRows);
+      } else {
+        orders = this.orderModel.find({ customer_id })
+      }
+      const total = await this.orderModel.countDocuments({ customer_id })
+      return { orders, total }
+    } catch (err) {
+      return { failure: true, message: err.message || "Something went wrong" };
+    }
+  }
+
   async create(params) {
     try {
       const newOrder = await this.orderModel.insertMany(params)
       if (!newOrder) throw new Error("Create order failed")
       return { newOrder: newOrder[0] };
-    } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
     }
   }
@@ -44,7 +65,7 @@ class OrderDaos {
         id, { status: status }, { new: true }
       );
       return { updatedOrder };
-    } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
     }
   }
