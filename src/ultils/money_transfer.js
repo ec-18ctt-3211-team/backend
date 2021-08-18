@@ -4,21 +4,26 @@ module.exports = class MoneyTransfer {
   constructor({ requestHandler }) {
     this.requestHandler = requestHandler;
 
-    this.isMatched = this.isMatched.bind(this);
+    this.send = this.send.bind(this);
   }
 
   async send(amount, client) {
-    const payload = {
-      USER: config.paypal.ADMIN_EMAIL,
-      PWD: config.paypal.ADMIN_PWD,
-      SIGNATURE: config.paypal.ADMIN_SIGNATURE,
-      METHOD: "MassPay",
-      VERSION: config.paypal.VERSION,
-      RECEIVERTYPE: "EmailAddress",
-      CURRENCYCODE: "USD",
-      L_EMAIL0: client,
-      L_AMT0: amount
-    }
-    return await this.requestHandler.post(config.paypal.URL, payload);
+    const METHOD = "MassPay";
+    const RECEIVERTYPE = "EmailAddress";
+    const CURRENCYCODE = "USD";
+
+    const params = new URLSearchParams();
+    params.append('USER', config.paypal.ADMIN_EMAIL);
+    params.append('PWD', config.paypal.ADMIN_PWD);
+    params.append('SIGNATURE', config.paypal.ADMIN_SIGNATURE);
+    params.append('METHOD', METHOD);
+    params.append('VERSION', config.paypal.VERSION);
+    params.append('RECEIVERTYPE', RECEIVERTYPE);
+    params.append('CURRENCYCODE', CURRENCYCODE);
+    params.append('L_EMAIL0', client);
+    params.append('L_AMT0', amount);
+    const url = `${config.paypal.URL}?${params.toString()}`;
+
+    return await this.requestHandler.post(url, {});
   }
 };
