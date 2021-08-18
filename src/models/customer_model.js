@@ -27,10 +27,6 @@ const customerSchema = mongoose.Schema({
     required: true,
     default: false,
   },
-  payment_number: {
-    type: String,
-    default: null,
-  },
   ci: {
     type: String,
     default: null,
