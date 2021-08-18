@@ -10,7 +10,7 @@ class OrderDaos {
   async getAll(host_id, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * (page-1)
+      const skipRows = limit * (page - 1);
       let orders;
       if (limit != NaN && page != NaN) {
         orders = await this.orderModel
@@ -18,10 +18,10 @@ class OrderDaos {
           .limit(limit)
           .skip(skipRows);
       } else {
-        orders = this.orderModel.find({ host_id })
+        orders = this.orderModel.find({ host_id });
       }
-      const total = await this.orderModel.countDocuments({ host_id })
-      return { orders, total }
+      const total = await this.orderModel.countDocuments({ host_id });
+      return { orders, total };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }
@@ -29,11 +29,11 @@ class OrderDaos {
 
   async create(params) {
     try {
-      const newOrder = await this.orderModel.insertMany(params)
-      if (!newOrder) throw new Error("Create order failed")
+      const newOrder = await this.orderModel.insertMany(params);
+      if (!newOrder) throw new Error("Create order failed");
       return { newOrder: newOrder[0] };
-    } catch(err) {
-      return { failure: true, message: err.message }
+    } catch (err) {
+      return { failure: true, message: err.message };
     }
   }
 
@@ -44,8 +44,8 @@ class OrderDaos {
         id, { status: status }, { new: true }
       );
       return { updatedOrder };
-    } catch(err) {
-      return { failure: true, message: err.message }
+    } catch (err) {
+      return { failure: true, message: err.message };
     }
   }
 }

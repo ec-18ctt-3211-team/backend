@@ -35,6 +35,10 @@ const customerSchema = mongoose.Schema({
     type: String,
     default: null,
   },
+  email_paypal: {
+    type: String,
+    default: null
+  }
 });
 
 module.exports = mongoose.model("Customer", customerSchema);
