@@ -1,21 +1,17 @@
-class GetAllDiscount {
+class GetAllDiscounIsPinned {
     constructor({ discountDaos }) {
         this.discountDaos = discountDaos;
         this.execute = this.execute.bind(this);
     }
-    async execute(params) {
+    async execute() {
         try {
-            const { limit, page } = params
-            const daosResult = await this.discountDaos.getAll({
-                limit: parseInt(limit),
-                page: parseInt(page),
-            });
+            const daosResult = await this.discountDaos.getIsPinned();
             if (daosResult.failure) throw new Error(daosResult.message);
             return daosResult;
-        } catch (error) {
+        } catch (err) {
             return { failure: true, message: err.message };
         }
     }
 }
 
-module.exports = GetAllDiscount;
+module.exports = GetAllDiscounIsPinned;
