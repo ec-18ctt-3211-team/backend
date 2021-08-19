@@ -12,7 +12,7 @@ class GetAllDiscount {
             });
             if (daosResult.failure) throw new Error(daosResult.message);
             return daosResult;
-        } catch (error) {
+        } catch (err) {
             return { failure: true, message: err.message };
         }
     }

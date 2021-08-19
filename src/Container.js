@@ -25,6 +25,7 @@ const updateCityService = require("./services/city_services/update_city");
 const getAllDiscountService = require("./services/discount_service/get_all_discount");
 const getAllDiscounIsPinnedService = require("./services/discount_service/get_all_discount_is_pinned");
 const getAllDiscountByCustomerIdService = require("./services/discount_service/get_all_discount_by_customer_id");
+const getDiscountByIdService = require("./services/discount_service/get_discount_by_id");
 const createDiscountService = require("./services/discount_service/create_discount");
 const applyDiscountService = require("./services/discount_service/apply_discount");
 const updateDiscountService = require("./services/discount_service/update_discount");
@@ -99,6 +100,7 @@ container.register({
   getAllDiscountService: awilix.asClass(getAllDiscountService),
   getAllDiscounIsPinnedService: awilix.asClass(getAllDiscounIsPinnedService),
   getAllDiscountByCustomerIdService: awilix.asClass(getAllDiscountByCustomerIdService),
+  getDiscountByIdService: awilix.asClass(getDiscountByIdService),
   createDiscountService: awilix.asClass(createDiscountService),
   applyDiscountService: awilix.asClass(applyDiscountService),
   updateDiscountService: awilix.asClass(updateDiscountService),

@@ -3,6 +3,7 @@ class DiscountController {
         getAllDiscountService,
         getAllDiscounIsPinnedService,
         getAllDiscountByCustomerIdService,
+        getDiscountByIdService,
         createDiscountService,
         applyDiscountService,
         updateDiscountService,
@@ -11,6 +12,7 @@ class DiscountController {
         this.getAllDiscountService = getAllDiscountService;
         this.getAllDiscounIsPinnedService = getAllDiscounIsPinnedService;
         this.getAllDiscountByCustomerIdService = getAllDiscountByCustomerIdService;
+        this.getDiscountByIdService = getDiscountByIdService;
         this.createDiscountService = createDiscountService;
         this.applyDiscountService = applyDiscountService;
         this.updateDiscountService = updateDiscountService;
@@ -18,6 +20,7 @@ class DiscountController {
         this.index = this.index.bind(this);
         this.pinned = this.pinned.bind(this);
         this.customerId = this.customerId.bind(this);
+        this.show = this.show.bind(this);
         this.create = this.create.bind(this);
         this.apply = this.apply.bind(this);
         this.update = this.update.bind(this);
@@ -62,6 +65,20 @@ class DiscountController {
                 valid: true,
                 discounts: serviceResult.discounts,
                 total: serviceResult.total,
+            });
+        } catch (err) {
+            res.status(400).send({ valid: false, message: err.message });
+        }
+    }
+
+    async show(req, res) {
+        try {
+            const params = { ...req.params };
+            const serviceResult = await this.getDiscountByIdService.execute(params);
+            if (serviceResult.failure) throw new Error(serviceResult.message);
+            res.status(200).send({
+                valid: true,
+                discount: serviceResult.discount,
             });
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message });

@@ -6,10 +6,11 @@ module.exports = ({ discountController }) => {
   router.get("/", discountController.index);
   router.get("/pinned", discountController.pinned);
   router.get("/customer/:id", discountController.customerId);
+  router.get("/:id", discountController.show);
   router.post("/", discountController.create);
   router.post("/apply", discountController.apply);
-  router.put("/:id",discountController.update);
-  router.delete("/:id",discountController.delete);
+  router.put("/:id", discountController.update);
+  router.delete("/:id", discountController.delete);
 
   return router;
 };
