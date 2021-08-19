@@ -6,6 +6,7 @@ module.exports = ({ orderController }) => {
     router.post("/", orderController.create);
     router.get("/host/:id", orderController.index);
     router.get("/customer/:id", orderController.indexCustomer);
+    router.get("/:id", orderController.show);
     router.put("/:id", orderController.update);
 
     return router;

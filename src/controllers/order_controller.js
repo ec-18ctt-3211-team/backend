@@ -3,15 +3,18 @@ class OrderController {
     createOrderService,
     getAllOrdersService,
     getAllOrdersByCustomerIdService,
+    getOrderByIdService,
     updateOrderService
   }) {
     this.createOrderService = createOrderService;
     this.getAllOrders = getAllOrdersService;
     this.getAllOrdersByCustomerIdService = getAllOrdersByCustomerIdService;
+    this.getOrderByIdService = getOrderByIdService;
     this.updateOrderService = updateOrderService;
 
     this.index = this.index.bind(this);
     this.indexCustomer = this.indexCustomer.bind(this);
+    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
   }
@@ -44,6 +47,20 @@ class OrderController {
       })
     } catch (err) {
       res.status(400).send({ valid: false, message: err.message })
+    }
+  }
+
+  async show(req, res) {
+    try {
+      const params = { ...req.params };
+      const serviceResult = await this.getOrderByIdService.execute(params);
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res.status(200).send({
+        valid: true,
+        order: serviceResult.order,
+      });
+    } catch (err) {
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 
