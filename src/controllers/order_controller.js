@@ -18,17 +18,16 @@ class OrderController {
 
   async index(req, res) {
     try {
-      const params = req.params;
-      const query = { ...req.query };
-      const serviceResult = await this.getAllOrders.execute(params, query);
+      const params = { ...req.query, ...req.params };
+      const serviceResult = await this.getAllOrders.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({
         valid: true,
         orders: serviceResult.orders,
-        total: serviceResult.total
-      })
+        total: serviceResult.total,
+      });
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message })
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 
@@ -52,10 +51,10 @@ class OrderController {
     try {
       const params = { ...req.body };
       const serviceResult = await this.createOrderService.execute(params);
-      if (serviceResult.failure) throw new Error(serviceResult.message)
-      res.status(200).send({ valid: true, newOrder: serviceResult.newOrder })
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res.status(200).send({ valid: true, newOrder: serviceResult.newOrder });
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message })
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 
@@ -63,10 +62,12 @@ class OrderController {
     try {
       const params = { ...req.params, ...req.body };
       const serviceResult = await this.updateOrderService.execute(params);
-      if (serviceResult.failure) throw new Error(serviceResult.message)
-      res.status(200).send({ valid: true, updatedOrder: serviceResult.updatedOrder })
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res
+        .status(200)
+        .send({ valid: true, updatedOrder: serviceResult.updatedOrder });
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message })
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 }

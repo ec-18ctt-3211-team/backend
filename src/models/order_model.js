@@ -57,6 +57,10 @@ const orderSchema = mongoose.Schema({
   deleted_at: {
     type: String,
     default: null
+  },
+  price: {
+    type: Number,
+    required: true
   }
 });
 

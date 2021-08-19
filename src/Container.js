@@ -59,6 +59,8 @@ const cityDaos = require("./daos/city_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
+const moneyTransfer = require("./ultils/money_transfer");
+const requestHandler = require("./ultils/request_handler");
 // Mappers
 
 const container = awilix.createContainer();
@@ -130,6 +132,8 @@ container.register({
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),
   authentication: awilix.asClass(authentication),
+  moneyTransfer: awilix.asClass(moneyTransfer),
+  requestHandler: awilix.asClass(requestHandler)
 
   // mappers
 });
