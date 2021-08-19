@@ -8,9 +8,7 @@ class UpdateDiscount {
     async execute(params) {
         try {
             const { id, discount_price, description, code, is_pinned, thumnail } = params;
-            console.log( id, discount_price, description, code, is_pinned, thumnail );
             const daosResult = await this.discountDaos.update(id, discount_price, description, code, is_pinned, thumnail);
-            console.log(daosResult);
             if (daosResult.failure || !daosResult.updatedDiscount) throw new Error(daosResult.message || "Discount Id is not exist");
             return daosResult;
         } catch (err) {

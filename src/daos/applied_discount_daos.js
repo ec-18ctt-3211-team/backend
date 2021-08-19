@@ -32,8 +32,6 @@ class AppliedDiscountDaos {
 
     async delete(discount_id) {
         try {
-            console.log("go to applied discount daos");
-            console.log("discount_id: ", discount_id);
             const res = await this.appliedDiscountModel.deleteMany({ discount_id: discount_id });
             return { result: res.ok, deletedCount: res.deletedCount };
         } catch (err) {

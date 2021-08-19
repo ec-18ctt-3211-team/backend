@@ -111,7 +111,6 @@ class DiscountController {
         try {
             const params = { ...req.params };
             const serviceResult = await this.deleteDiscountService.execute(params);
-            console.log("service:", serviceResult);
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
