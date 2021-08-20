@@ -6,19 +6,22 @@ class GetRooms {
 
   async execute(params) {
     try {
-      const { city, limit, page, sort } = params;
+      const { city, limit, page, sort, type, keyword } = params;
       let result;
-      if (city) {
-        const parsedCity = city.split("_").join(" ");
-        result = await this.roomDaos.getByCity(parsedCity, {
-          limit: parseInt(limit),
-          page: parseInt(page),
-          sort
-        });
-      } else {
+      if (!city && !type && !keyword) {
         result = await this.roomDaos.getAll({
           limit: parseInt(limit),
           page: parseInt(page),
+        });
+      } else {
+        let parsedCity;
+        if (city) parsedCity = city.split("_").join(" ");
+        result = await this.roomDaos.getByCity(parsedCity, {
+          limit: parseInt(limit),
+          page: parseInt(page),
+          sort,
+          type,
+          keyword
         });
       }
       if (result.failure) throw new Error(result.message);
