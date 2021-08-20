@@ -6,13 +6,14 @@ class GetRooms {
 
   async execute(params) {
     try {
-      const { city, limit, page } = params;
+      const { city, limit, page, sort } = params;
       let result;
       if (city) {
         const parsedCity = city.split("_").join(" ");
         result = await this.roomDaos.getByCity(parsedCity, {
           limit: parseInt(limit),
           page: parseInt(page),
+          sort
         });
       } else {
         result = await this.roomDaos.getAll({

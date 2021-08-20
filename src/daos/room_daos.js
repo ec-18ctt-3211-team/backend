@@ -19,7 +19,7 @@ class RoomDaos {
         rooms = await this.roomModel
           .find({})
           .limit(limit)
-          .skip(skipRows);
+          .skip(skipRows)
       } else {
         rooms = this.roomModel.find({});
       }
@@ -32,16 +32,24 @@ class RoomDaos {
 
   async getByCity(city, config = {}) {
     try {
-      const { limit, page } = config;
-      const skipRows = limit * (page-1);
+      const { limit, page, sort } = config;
+
+      let typeSort = 0
+      if (sort === "inc") typeSort = 1
+      else if (sort === "dec") typeSort = -1
+
       let rooms;
+      const skipRows = limit * (page-1);
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel
           .find({ "address.city": city })
           .limit(limit)
-          .skip(skipRows);
+          .skip(skipRows)
+          .sort({ normal_price: typeSort });
       } else {
-        rooms = await this.roomModel.find({ "address.city": city });
+        rooms = await this.roomModel
+          .find({ "address.city": city })
+          .sort({ normal_price: typeSort });
       }
       const total = await this.roomModel.countDocuments({
         "address.city": city,
