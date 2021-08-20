@@ -1,3 +1,5 @@
+const { query } = require("express");
+
 class OrderController {
   constructor({
     createOrderService,
@@ -21,8 +23,9 @@ class OrderController {
 
   async index(req, res) {
     try {
-      const params = { ...req.query, ...req.params };
-      const serviceResult = await this.getAllOrders.execute(params);
+      const params = req.params;
+      const query = { ...req.query };
+      const serviceResult = await this.getAllOrders.execute(params, query);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(200).send({
         valid: true,
