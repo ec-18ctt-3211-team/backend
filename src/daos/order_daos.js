@@ -4,6 +4,7 @@ class OrderDaos {
 
     this.getAll = this.getAll.bind(this);
     this.getAllByCustomerId = this.getAllByCustomerId.bind(this);
+    this.getById = this.getById.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
   }
@@ -43,6 +44,15 @@ class OrderDaos {
       }
       const total = await this.orderModel.countDocuments({ customer_id })
       return { orders, total }
+    } catch (err) {
+      return { failure: true, message: err.message || "Something went wrong" };
+    }
+  }
+
+  async getById(id) {
+    try {
+      const order = await this.orderModel.findById(id);
+      return { order };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
     }

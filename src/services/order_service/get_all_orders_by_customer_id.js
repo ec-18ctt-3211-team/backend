@@ -13,7 +13,7 @@ class GetAllOrdersByCustomerId {
             if (!orders) throw new Error("orders not found");
             return orders;
         } catch (error) {
-            return { failure: true, message: error, message };
+            return { failure: true, message: error.message };
         }
     }
 }
