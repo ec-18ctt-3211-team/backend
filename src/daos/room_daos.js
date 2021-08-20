@@ -9,11 +9,12 @@ class RoomDaos {
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
     this.getByCustomer = this.getByCustomer.bind(this);
+    this.getByHost = this.getByHost.bind(this);
   }
   async getAll(config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * (page-1);
+      const skipRows = limit * (page - 1);
       let rooms;
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel
@@ -25,7 +26,7 @@ class RoomDaos {
       }
       const total = await this.roomModel.countDocuments({})
       return { rooms, total }
-    } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
     }
   }
@@ -33,7 +34,7 @@ class RoomDaos {
   async getByCity(city, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * (page-1);
+      const skipRows = limit * (page - 1);
       let rooms;
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel
@@ -75,7 +76,27 @@ class RoomDaos {
   async getByCustomer(host_id, config = {}) {
     try {
       const { limit, page } = config;
-      const skipRows = limit * (page-1);
+      const skipRows = limit * (page - 1);
+      let rooms;
+      if (limit != NaN && page != NaN) {
+        rooms = await this.roomModel
+          .find({ host_id })
+          .limit(limit)
+          .skip(skipRows);
+      } else {
+        rooms = await this.roomModel.find({ host_id });
+      }
+      const total = await this.roomModel.countDocuments({ host_id });
+      return { rooms, total };
+    } catch (err) {
+      return { failure: true, message: err.message };
+    }
+  }
+
+  async getByHost(host_id, config = {}) {
+    try {
+      const { limit, page } = config;
+      const skipRows = limit * (page - 1);
       let rooms;
       if (limit != NaN && page != NaN) {
         rooms = await this.roomModel

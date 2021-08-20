@@ -4,5 +4,6 @@ module.exports = ({ roomController }) => {
   const router = express.Router();
   router.get("/", roomController.index);
   router.get("/:id", roomController.show);
+  router.get("/host/:id", roomController.host);
   return router;
 };
