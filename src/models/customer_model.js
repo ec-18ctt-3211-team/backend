@@ -27,14 +27,14 @@ const customerSchema = mongoose.Schema({
     required: true,
     default: false,
   },
-  payment_number: {
-    type: String,
-    default: null,
-  },
   ci: {
     type: String,
     default: null,
   },
+  email_paypal: {
+    type: String,
+    default: null
+  }
 });
 
 module.exports = mongoose.model("Customer", customerSchema);

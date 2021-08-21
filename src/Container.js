@@ -12,9 +12,12 @@ const registerService = require("./services/auth_services/register");
 const getRoomByIdService = require("./services/room_services/get_room_by_id");
 const getRoomsService = require("./services/room_services/get_rooms");
 const getRoomByCustomerService = require("./services/customer_services/get_rooms_by_customer");
+const getRoomsByHostService = require("./services/room_services/get_rooms_by_host");
 const getAllDiscountService = require("./services/discount_service/get_all_discount");
 const loginService = require("./services/auth_services/login");
 const getAllOrdersService = require("./services/order_service/get_all_orders")
+const getAllOrdersByCustomerIdService = require("./services/order_service/get_all_orders_by_customer_id");
+const getOrderByIdService = require("./services/order_service/get_order_by_id");
 const createOrderService = require("./services/order_service/create_order")
 const updateOrderService = require("./services/order_service/update_order")
 const getAllCitiesService = require("./services/city_services/get_all_cities");
@@ -58,6 +61,8 @@ const cityDaos = require("./daos/city_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
+const moneyTransfer = require("./ultils/money_transfer");
+const requestHandler = require("./ultils/request_handler");
 // Mappers
 
 const container = awilix.createContainer();
@@ -78,8 +83,11 @@ container.register({
   updateCustomerService: awilix.asClass(updateCustomerService),
   getAllDiscountService: awilix.asClass(getAllDiscountService),
   getRoomByCustomerService: awilix.asClass(getRoomByCustomerService),
+  getRoomsByHostService: awilix.asClass(getRoomsByHostService),
   loginService: awilix.asClass(loginService),
   getAllOrdersService: awilix.asClass(getAllOrdersService),
+  getAllOrdersByCustomerIdService: awilix.asClass(getAllOrdersByCustomerIdService),
+  getOrderByIdService: awilix.asClass(getOrderByIdService),
   createOrderService: awilix.asClass(createOrderService),
   updateOrderService: awilix.asClass(updateOrderService),
   getAllCitiesService: awilix.asClass(getAllCitiesService),
@@ -128,6 +136,8 @@ container.register({
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),
   authentication: awilix.asClass(authentication),
+  moneyTransfer: awilix.asClass(moneyTransfer),
+  requestHandler: awilix.asClass(requestHandler)
 
   // mappers
 });

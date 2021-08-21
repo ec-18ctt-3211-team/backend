@@ -1,12 +1,22 @@
 {
-  "Server": {
-      "PORT": 4000,
-      "SECRET_KEY": "Secret",
-      "TIMEOUT": 1200000,
-      "IP": "http://localhost:4000",
-      "DOMAIN": "http://localhost:"
+  "Server":
+  {
+    "PORT": 4000,
+    "SECRET_KEY": "Secret",
+    "TIMEOUT": 1200000,
+    "IP": "http://localhost:4000",
+    "DOMAIN": "http://localhost:"
   },
-  "Database": {
-      "connectionString": "mongodb+srv://baodihuynh:domaybietlagi@dicluster.5mmwb.mongodb.net/BookingApp?retryWrites=true&w=majority"
+  "Database":
+  {
+    "connectionString": "mongodb+srv://baodihuynh:domaybietlagi@dicluster.5mmwb.mongodb.net/BookingApp?retryWrites=true&w=majority"
+  },
+  "paypal":
+  {
+    "URL": "https://api-3t.sandbox.paypal.com/nvp",
+    "ADMIN_EMAIL": "sb-xcjtf7078688_api1.business.example.com",
+    "ADMIN_PWD": "4R2V8535LEEPXUZ4",
+    "ADMIN_SIGNATURE": "ArjI6wMRsBNWop-3NCMh8trd93GoAcvoRf6lmh7.hNc5GeZ0rPnazmnx",
+    "VERSION": 90
   }
 }

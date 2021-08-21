@@ -1,4 +1,4 @@
-class GetRoomsByCustomer {
+class GetRoomsByHost {
   constructor({ roomDaos }) {
     this.roomDaos = roomDaos;
 
@@ -7,7 +7,7 @@ class GetRoomsByCustomer {
 
   async execute(params) {
     const { id, limit, page } = params;
-    const result = await this.roomDaos.getByCustomer(id, {
+    const result = await this.roomDaos.getByHost(id, {
       limit: parseInt(limit),
       page: parseInt(page),
     });
@@ -16,4 +16,4 @@ class GetRoomsByCustomer {
   }
 }
 
-module.exports = GetRoomsByCustomer;
+module.exports = GetRoomsByHost;
