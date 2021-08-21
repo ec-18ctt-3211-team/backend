@@ -20,7 +20,7 @@ class RoomDaos {
         rooms = await this.roomModel
           .find({})
           .limit(limit)
-          .skip(skipRows);
+          .skip(skipRows)
       } else {
         rooms = this.roomModel.find({});
       }
@@ -33,20 +33,42 @@ class RoomDaos {
 
   async getByCity(city, config = {}) {
     try {
-      const { limit, page } = config;
-      const skipRows = limit * (page - 1);
-      let rooms;
-      if (limit != NaN && page != NaN) {
+      const { limit, page, sort, type, keyword } = config;
+
+      let typeSort = 0
+      if (sort === "inc") typeSort = 1
+      else if (sort === "dec") typeSort = -1
+
+      let rooms, total;
+      const skipRows = limit * (page-1);
+      if (type && keyword) {
+        const encoded = decodeURI(keyword);
+        const regex = new RegExp(encoded, 'i')
+        if (type === "title") {
+          rooms = await this.roomModel
+          .find({ title: { $regex: regex } })
+          .limit(limit)
+          .skip(skipRows)
+          .sort({ normal_price: typeSort });
+        } else if  (type === "city") {
+          rooms = await this.roomModel
+          .find({
+            "address.city": { "$regex": keyword, "$options": "i" }
+          })
+          .limit(limit)
+          .skip(skipRows)
+          .sort({ normal_price: typeSort });
+        }
+      } else {
         rooms = await this.roomModel
           .find({ "address.city": city })
           .limit(limit)
-          .skip(skipRows);
-      } else {
-        rooms = await this.roomModel.find({ "address.city": city });
+          .skip(skipRows)
+          .sort({ normal_price: typeSort });
+        total = await this.roomModel.countDocuments({
+          "address.city": city,
+        });
       }
-      const total = await this.roomModel.countDocuments({
-        "address.city": city,
-      });
       return { rooms, total };
     } catch (err) {
       return { failure: true, message: err.message };
