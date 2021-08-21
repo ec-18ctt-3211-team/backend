@@ -40,24 +40,29 @@ class RoomDaos {
       else if (sort === "dec") typeSort = -1
 
       let rooms, total;
-      const skipRows = limit * (page-1);
+      const skipRows = limit * (page - 1);
       if (type && keyword) {
         const encoded = decodeURI(keyword);
-        const regex = new RegExp(encoded, 'i')
         if (type === "title") {
           rooms = await this.roomModel
-          .find({ title: { $regex: regex } })
-          .limit(limit)
-          .skip(skipRows)
-          .sort({ normal_price: typeSort });
-        } else if  (type === "city") {
+            .find({ title: { "$regex": encoded, $options: "i" } })
+            .limit(limit)
+            .skip(skipRows)
+            .sort({ normal_price: typeSort });
+
+          total = await this.roomModel.countDocuments({ title: { "$regex": encoded, $options: "i" } });
+        } else if (type === "city") {
           rooms = await this.roomModel
-          .find({
-            "address.city": { "$regex": keyword, "$options": "i" }
-          })
-          .limit(limit)
-          .skip(skipRows)
-          .sort({ normal_price: typeSort });
+            .find({
+              "address.city": { "$regex": encoded, "$options": "i" }
+            })
+            .limit(limit)
+            .skip(skipRows)
+            .sort({ normal_price: typeSort });
+
+          total = await this.roomModel.countDocuments(
+            { "address.city": { "$regex": encoded, "$options": "i" } }
+          );
         }
       } else {
         rooms = await this.roomModel
@@ -65,6 +70,7 @@ class RoomDaos {
           .limit(limit)
           .skip(skipRows)
           .sort({ normal_price: typeSort });
+
         total = await this.roomModel.countDocuments({
           "address.city": city,
         });
