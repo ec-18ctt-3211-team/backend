@@ -5,19 +5,22 @@ class CityController {
             getCityByIdService,
             getCityIsPinnedService,
             createCityService,
-            updateCityService
+            updateCityService,
+            deleteCityService
         }) {
         this.getAllCitiesService = getAllCitiesService;
         this.getCityByIdService = getCityByIdService;
         this.getCityIsPinnedService = getCityIsPinnedService;
         this.createCityService = createCityService;
         this.updateCityService = updateCityService;
+        this.deleteCityService = deleteCityService;
 
         this.index = this.index.bind(this);
         this.pinned = this.pinned.bind(this);
         this.show = this.show.bind(this);
         this.create = this.create.bind(this);
         this.update = this.update.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     async index(req, res) {
@@ -81,6 +84,20 @@ class CityController {
             res.status(200).send({ valid: true, updatedCity: serviceResult.updatedCity })
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message })
+        }
+    }
+
+    async delete(req, res) {
+        try {
+            const params = { ...req.params };
+            const serviceResult = await this.deleteCityService.execute(params);
+            if (serviceResult.failure) throw new Error(serviceResult.message);
+            res.status(200).send({
+                valid: true,
+                city: serviceResult.city,
+            });
+        } catch (err) {
+            res.status(400).send({ valid: false, message: err.message });
         }
     }
 }

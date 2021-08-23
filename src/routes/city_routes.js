@@ -7,5 +7,6 @@ module.exports = ({ cityController }) => {
     router.get("/pinned", cityController.pinned);
     router.get("/:id", cityController.show);
     router.put("/:id", cityController.update);
+    router.delete("/:id", cityController.delete);
     return router;
 };

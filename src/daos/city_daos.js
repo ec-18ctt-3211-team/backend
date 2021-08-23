@@ -7,6 +7,7 @@ class CityDaos {
     this.getById = this.getById.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async getAll(config = {}) {
@@ -76,6 +77,15 @@ class CityDaos {
       return { updatedCity };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" }
+    }
+  }
+
+  async delete(id) {
+    try {
+      const res = await this.cityModel.deleteOne({ id: id });
+      return { result: res.ok, deletedCount: res.deletedCount };
+    } catch (err) {
+      return { failure: true, message: err.message || "Something went wrong" };
     }
   }
 }
