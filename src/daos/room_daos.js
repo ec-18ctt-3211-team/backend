@@ -1,15 +1,25 @@
 class RoomDaos {
-  constructor({ roomModel, bookingDateDaos, extraPriceDaos, photoDaos }) {
+  constructor({
+    roomModel, 
+    bookingDateDaos, 
+    extraPriceDaos, 
+    photoDaos,
+    photoModel,
+    extraPriceModel
+  }) {
     this.roomModel = roomModel;
     this.bookingDateDaos = bookingDateDaos;
     this.extraPriceDaos = extraPriceDaos;
     this.photoDaos = photoDaos;
+    this.photoModel = photoModel;
+    this.extraPriceModel = extraPriceModel;
 
     this.getAll = this.getAll.bind(this);
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
     this.getByCustomer = this.getByCustomer.bind(this);
     this.getByHost = this.getByHost.bind(this);
+    this.create = this.create.bind(this)
   }
   async getAll(config = {}) {
     try {
@@ -138,6 +148,32 @@ class RoomDaos {
       return { rooms, total };
     } catch (err) {
       return { failure: true, message: err.message };
+    }
+  }
+
+  async create(params, newFileNames) {
+    try {
+      const { extraPrices } = params;     
+      let newPrices = null;
+      delete params.extraPrices;
+
+      const newRoom = await this.roomModel.insertMany([{ ...params }])
+
+      if (extraPrices) {
+        extraPrices = extraPrices.map(price => {
+          return { room_id: newRoom._id, ...price }
+        });
+        const newPrices = await this.extraPriceModel.insertMany(extraPrices)
+      }
+
+      const photos = newFileNames.map(name => {
+        return { room_id: newRoom[0]._id, path: `/${name}` }
+      });
+      const newPhotos = await this.photoModel.insertMany(photos)
+
+      return {}
+    } catch(err) {
+      return { failure: true, message: err.message }
     }
   }
 }
