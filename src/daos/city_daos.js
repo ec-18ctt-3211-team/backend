@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 class CityDaos {
   constructor({ cityModel }) {
     this.cityModel = cityModel;
@@ -70,7 +72,7 @@ class CityDaos {
       const updatedCity = await this.cityModel
         .findOneAndUpdate({ id: id }, {
           titles: titles,
-          room_id: room_id,
+          room_id: mongoose.Types.ObjectId(room_id),
           thumnail: thumnail,
           is_pinned: is_pinned,
         }, { new: true })
