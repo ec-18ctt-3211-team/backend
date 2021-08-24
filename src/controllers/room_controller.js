@@ -80,8 +80,10 @@ class RoomController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const params = req.body;
-      const serviceResult = this.updateRoomsService.execute(id, params)
+      const params = JSON.parse(JSON.stringify(req.body));
+      const { newPhotoIds } = params
+      const newFileNames = req.filenames
+      const serviceResult = this.updateRoomsService.execute(id, params, newPhotoIds, newFileNames)
       if (serviceResult.failure) throw new Error(serviceResult.message)
       res.status(201).send({ valid: true })
     } catch (err) {

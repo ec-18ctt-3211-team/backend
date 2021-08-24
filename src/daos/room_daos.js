@@ -152,18 +152,7 @@ class RoomDaos {
 
   async create(params, newFileNames) {
     try {
-      const { extraPrices } = params;
-      let newPrices = null;
-      delete params.extraPrices;
-
       const newRoom = await this.roomModel.insertMany([{ ...params }])
-
-      if (extraPrices) {
-        extraPrices = extraPrices.map(price => {
-          return { room_id: newRoom._id, ...price }
-        });
-        const newPrices = await this.extraPriceModel.insertMany(extraPrices)
-      }
 
       const photos = newFileNames.map(name => {
         return { room_id: newRoom[0]._id, path: `/${name}` }
@@ -176,10 +165,16 @@ class RoomDaos {
     }
   }
 
-  async update(id, params) {
+  async update(id, params, newPhotoIds, newFileNames) {
     try {
       const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
-      console.log(updatedRoom)
+      for (let i = 0; i < newPhotoIds.length; ++i) {
+        const photo = await this.photoModel.findByIdAndUpdate(
+          newPhotoIds[i], { path: `/${newFileNames[i]}` }, { new: true }
+        );
+        if (!photo) throw new Error(`Photo <${newPhotoIds[i]}> not found`);
+      }
+
       if (!updatedRoom) throw new Error('Update room failed');
       return { updatedRoom }
     } catch (err) {

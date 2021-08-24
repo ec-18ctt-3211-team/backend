@@ -5,8 +5,8 @@ class UpdateRoomService {
     this.execute = this.execute.bind(this)
   }
 
-  async execute(id, params) {
-    const daosResult = this.roomDaos.update(id, params)
+  async execute(id, params, newPhotoIds, newFileNames) {
+    const daosResult = this.roomDaos.update(id, params, newPhotoIds, newFileNames)
     return daosResult;
   }
 }

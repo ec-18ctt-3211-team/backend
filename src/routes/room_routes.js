@@ -36,6 +36,6 @@ module.exports = ({ roomController }) => {
   router.get("/:id", roomController.show);
   router.get("/host/:id", roomController.host);
   router.post("/", upload.any(), roomController.create);
-  router.put('/:id', roomController.update)
+  router.put('/:id', upload.any(), roomController.update)
   return router;
 };
