@@ -67,7 +67,7 @@ class CityController {
 
     async create(req, res) {
         try {
-            const params = { ...req.body };
+            const params = { ...req.body, thumnail: `/${req.filename}` };
             const serviceResult = await this.createCityService.execute(params);
             if (serviceResult.failure) throw new Error(serviceResult.message)
             res.status(200).send({ valid: true, newCity: serviceResult.newCity })
@@ -78,7 +78,7 @@ class CityController {
 
     async update(req, res) {
         try {
-            const params = { ...req.params, ...req.body };
+            const params = { ...req.params, ...req.body, thumnail: `/${req.filename}`  };
             const serviceResult = await this.updateCityService.execute(params);
             if (serviceResult.failure) throw new Error(serviceResult.message)
             res.status(200).send({ valid: true, updatedCity: serviceResult.updatedCity })
