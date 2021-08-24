@@ -65,11 +65,12 @@ class CityDaos {
     }
   }
 
-  async update(id, titles, thumnail, is_pinned) {
+  async update(id, titles, room_id, thumnail, is_pinned) {
     try {
       const updatedCity = await this.cityModel
         .findOneAndUpdate({ id: id }, {
           titles: titles,
+          room_id: room_id,
           thumnail: thumnail,
           is_pinned: is_pinned,
         }, { new: true })
