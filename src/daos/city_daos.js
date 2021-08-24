@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 class CityDaos {
   constructor({ cityModel }) {
     this.cityModel = cityModel;
@@ -7,6 +9,7 @@ class CityDaos {
     this.getById = this.getById.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async getAll(config = {}) {
@@ -64,11 +67,12 @@ class CityDaos {
     }
   }
 
-  async update(id, titles, thumnail, is_pinned) {
+  async update(id, titles, room_id, thumnail, is_pinned) {
     try {
       const updatedCity = await this.cityModel
         .findOneAndUpdate({ id: id }, {
           titles: titles,
+          room_id: mongoose.Types.ObjectId(room_id),
           thumnail: thumnail,
           is_pinned: is_pinned,
         }, { new: true })
@@ -76,6 +80,15 @@ class CityDaos {
       return { updatedCity };
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" }
+    }
+  }
+
+  async delete(id) {
+    try {
+      const res = await this.cityModel.deleteOne({ id: id });
+      return { result: res.ok, deletedCount: res.deletedCount };
+    } catch (err) {
+      return { failure: true, message: err.message || "Something went wrong" };
     }
   }
 }
