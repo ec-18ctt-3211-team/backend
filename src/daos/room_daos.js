@@ -1,15 +1,26 @@
 class RoomDaos {
-  constructor({ roomModel, bookingDateDaos, extraPriceDaos, photoDaos }) {
+  constructor({
+    roomModel,
+    bookingDateDaos,
+    extraPriceDaos,
+    photoDaos,
+    photoModel,
+    extraPriceModel
+  }) {
     this.roomModel = roomModel;
     this.bookingDateDaos = bookingDateDaos;
     this.extraPriceDaos = extraPriceDaos;
     this.photoDaos = photoDaos;
+    this.photoModel = photoModel;
+    this.extraPriceModel = extraPriceModel;
 
     this.getAll = this.getAll.bind(this);
     this.getByCity = this.getByCity.bind(this);
     this.getById = this.getById.bind(this);
     this.getByCustomer = this.getByCustomer.bind(this);
     this.getByHost = this.getByHost.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
   }
   async getAll(config = {}) {
     try {
@@ -60,9 +71,7 @@ class RoomDaos {
             .skip(skipRows)
             .sort({ normal_price: typeSort });
 
-          total = await this.roomModel.countDocuments(
-            { "address.city": { "$regex": encoded, "$options": "i" } }
-          );
+          total = await this.roomModel.countDocuments({ "address.city": { "$regex": encoded, "$options": "i" } });
         }
       } else {
         rooms = await this.roomModel
@@ -138,6 +147,38 @@ class RoomDaos {
       return { rooms, total };
     } catch (err) {
       return { failure: true, message: err.message };
+    }
+  }
+
+  async create(params, newFileNames) {
+    try {
+      const newRoom = await this.roomModel.insertMany([{ ...params }])
+
+      const photos = newFileNames.map(name => {
+        return { room_id: newRoom[0]._id, path: `/${name}` }
+      });
+      const newPhotos = await this.photoModel.insertMany(photos)
+
+      return {}
+    } catch (err) {
+      return { failure: true, message: err.message }
+    }
+  }
+
+  async update(id, params, newPhotoIds, newFileNames) {
+    try {
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
+      for (let i = 0; i < newPhotoIds.length; ++i) {
+        const photo = await this.photoModel.findByIdAndUpdate(
+          newPhotoIds[i], { path: `/${newFileNames[i]}` }, { new: true }
+        );
+        if (!photo) throw new Error(`Photo <${newPhotoIds[i]}> not found`);
+      }
+
+      if (!updatedRoom) throw new Error('Update room failed');
+      return { updatedRoom }
+    } catch (err) {
+      return { failure: true, message: err.message }
     }
   }
 }
