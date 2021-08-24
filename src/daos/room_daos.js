@@ -176,12 +176,14 @@ class RoomDaos {
     }
   }
 
-  async update(id, params, newFileNames) {
+  async update(id, params) {
     try {
-      const updatedRoom = this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
-      const
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
+      console.log(updatedRoom)
+      if (!updatedRoom) throw new Error('Update room failed');
+      return { updatedRoom }
     } catch (err) {
-
+      return { failure: true, message: err.message }
     }
   }
 }
