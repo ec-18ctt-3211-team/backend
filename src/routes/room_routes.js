@@ -35,17 +35,7 @@ module.exports = ({ roomController }) => {
   router.get("/", roomController.index);
   router.get("/:id", roomController.show);
   router.get("/host/:id", roomController.host);
-  router.post(
-    "/",
-    upload.any(),
-    roomController.create
-  );
+  router.post("/", upload.any(), roomController.create);
+  router.put('/:id', upload.any(), roomController.update)
   return router;
 };
-
-// upload.fields([
-//   { name: "img_1", maxCount: 1 },
-//   { name: "img_2", maxCount: 1 },
-//   { name: "img_3", maxCount: 1 },
-//   { name: "img_4", maxCount: 1 },
-// ])

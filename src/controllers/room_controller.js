@@ -4,19 +4,19 @@ class RoomController {
     getRoomByIdService,
     getRoomsByHostService,
     createRoomsService,
-    // updateRoomsService
+    updateRoomsService
   }) {
     this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
     this.getRoomsByHostService = getRoomsByHostService;
     this.createRoomsService = createRoomsService;
-    // this.updateRoomsService = updateRoomsService;
+    this.updateRoomsService = updateRoomsService;
 
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
     this.host = this.host.bind(this);
     this.create = this.create.bind(this);
-    // this.update = this.update.bind(this);
+    this.update = this.update.bind(this);
   }
 
   async index(req, res) {
@@ -65,16 +65,25 @@ class RoomController {
 
   async create(req, res) {
     try {
-      const parsedBody = JSON.parse(JSON.stringify(req.body));
-      const params = { ...parsedBody }
+      const params = JSON.parse(JSON.stringify(req.body));
       const newFileNames = req.filenames
-      const serviceResult = this.createRoomsService.execute(
-        { ...params, thumnail: `/${newFileNames[0]}` },
+      const serviceResult = this.createRoomsService.execute({ ...params, thumnail: `/${newFileNames[0]}` },
         newFileNames
       )
       if (serviceResult.failure) throw new Error(serviceResult.message)
       res.status(204).send(null)
-    } catch(err) {
+    } catch (err) {
+      res.status(400).send({ valid: false, message: err.message })
+    }
+  }
+
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const params = JSON.parse(JSON.stringify(req.body));
+      if (req.filenames) params.thumnail = req.filenames[0]
+      const serviceResult = this.updateRoomsService.execute(id, params, req.filenames)
+    } catch (err) {
       res.status(400).send({ valid: false, message: err.message })
     }
   }

@@ -1,8 +1,8 @@
 class RoomDaos {
   constructor({
-    roomModel, 
-    bookingDateDaos, 
-    extraPriceDaos, 
+    roomModel,
+    bookingDateDaos,
+    extraPriceDaos,
     photoDaos,
     photoModel,
     extraPriceModel
@@ -19,7 +19,8 @@ class RoomDaos {
     this.getById = this.getById.bind(this);
     this.getByCustomer = this.getByCustomer.bind(this);
     this.getByHost = this.getByHost.bind(this);
-    this.create = this.create.bind(this)
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
   }
   async getAll(config = {}) {
     try {
@@ -70,9 +71,7 @@ class RoomDaos {
             .skip(skipRows)
             .sort({ normal_price: typeSort });
 
-          total = await this.roomModel.countDocuments(
-            { "address.city": { "$regex": encoded, "$options": "i" } }
-          );
+          total = await this.roomModel.countDocuments({ "address.city": { "$regex": encoded, "$options": "i" } });
         }
       } else {
         rooms = await this.roomModel
@@ -153,7 +152,7 @@ class RoomDaos {
 
   async create(params, newFileNames) {
     try {
-      const { extraPrices } = params;     
+      const { extraPrices } = params;
       let newPrices = null;
       delete params.extraPrices;
 
@@ -172,8 +171,17 @@ class RoomDaos {
       const newPhotos = await this.photoModel.insertMany(photos)
 
       return {}
-    } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
+    }
+  }
+
+  async update(id, params, newFileNames) {
+    try {
+      const updatedRoom = this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
+      const
+    } catch (err) {
+
     }
   }
 }
