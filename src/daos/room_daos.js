@@ -195,6 +195,7 @@ class RoomDaos {
       } catch(err) {
       return { failure: true, message: err.message }
     }
+  }
     
   async delete(id) {
     try {
