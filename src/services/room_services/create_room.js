@@ -5,8 +5,8 @@ class CreateRoomService {
     this.execute = this.execute.bind(this)
   }
 
-  async execute(params, newFileNames) {
-    const daosResult = this.roomDaos.create(params, newFileNames)
+  async execute(params) {
+    const daosResult = await this.roomDaos.create(params)
     return daosResult;
   }
 }

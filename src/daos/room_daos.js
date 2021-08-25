@@ -150,27 +150,28 @@ class RoomDaos {
     }
   }
 
-  async create(params, newFileNames) {
+  async create(params) {
     try {
+      const { photos } = params;
       const newRoom = await this.roomModel.insertMany([{ ...params }])
 
-      const photos = newFileNames.map(name => {
-        return { room_id: newRoom[0]._id, path: `/${name}` }
+      photos = photos.map(path => {
+        return { room_id: newRoom[0]._id, path: path }
       });
-      const newPhotos = await this.photoModel.insertMany(photos)
-
+      await this.photoModel.insertMany(photos)
       return {}
     } catch (err) {
       return { failure: true, message: err.message }
     }
   }
 
-  async update(id, params, newPhotoIds, newFileNames) {
+  async update(id, params) {
     try {
+      const { photos } = params;
       const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params }, { new: true });
-      for (let i = 0; i < newPhotoIds.length; ++i) {
+      for (let i = 0; i < photos.length; ++i) {
         const photo = await this.photoModel.findByIdAndUpdate(
-          newPhotoIds[i], { path: `/${newFileNames[i]}` }, { new: true }
+          newPhotoIds[i], { path: imgs[i] }, { new: true }
         );
         if (!photo) throw new Error(`Photo <${newPhotoIds[i]}> not found`);
       }

@@ -67,22 +67,10 @@ class CityDaos {
     }
   }
 
-  async update(id, titles, room_id, thumnail, is_pinned) {
+  async update(params) {
     try {
-      let roomId
-      if (typeof room_id !== 'undefined') {
-        roomId = mongoose.Types.ObjectId(room_id)
-      }
-      else {
-        roomId = null
-      }
       const updatedCity = await this.cityModel
-        .findOneAndUpdate({ id: id }, {
-          titles: titles,
-          room_id: roomId,
-          thumnail: thumnail,
-          is_pinned: is_pinned,
-        }, { new: true })
+        .findOneAndUpdate({ id: params.id }, { ...params }, { new: true })
         .select('-_id');
       return { updatedCity };
     } catch (err) {
