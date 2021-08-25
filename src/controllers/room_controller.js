@@ -5,6 +5,8 @@ class RoomController {
     getRoomsByHostService,
     createRoomsService,
     updateRoomsService,
+    recommender,
+    lastChoiceModel,
     deleteRoomService
   }) {
     this.getRoomsService = getRoomsService;
@@ -12,6 +14,8 @@ class RoomController {
     this.getRoomsByHostService = getRoomsByHostService;
     this.createRoomsService = createRoomsService;
     this.updateRoomsService = updateRoomsService;
+    this.recommender = recommender;
+    this.lastChoiceModel = lastChoiceModel;
     this.deleteRoomService = deleteRoomService
 
     this.index = this.index.bind(this);
@@ -40,8 +44,19 @@ class RoomController {
   async show(req, res) {
     try {
       const params = { ...req.params };
+      const { customer_id } = req.query;
       const serviceResult = await this.getRoomByIdService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
+      if (customer_id) {
+        const result = await this.lastChoiceModel.findOneAndUpdate(
+          { customer_id },
+          { room_id: serviceResult.room._id }
+        )
+        if (!result) {
+          const newChoice = new this.lastChoiceModel({ customer_id, room_id: params.id })
+          await newChoice.save()
+        }
+      }
       res.status(200).send({
         valid: true,
         room: serviceResult.room,

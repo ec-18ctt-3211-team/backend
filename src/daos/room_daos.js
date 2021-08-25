@@ -184,6 +184,18 @@ class RoomDaos {
     }
   }
 
+  async getByArrayId(ids) {
+    try {
+      const rooms = await this.roomModel.find({
+        _id: {
+          "$in": ids 
+        }
+      })
+      return { rooms }
+      } catch(err) {
+      return { failure: true, message: err.message }
+    }
+    
   async delete(id) {
     try {
       const deletedRoom = await this.roomModel.deleteOne({ _id: id });

@@ -45,6 +45,7 @@ const roomModel = require("./models/room_model");
 const discountModel = require("./models/discount_model");
 const orderModel = require("./models/order_model")
 const cityModel = require("./models/city_model");
+const lastChoiceModel = require("./models/last_choice_model")
 // Controllers
 const authController = require("./controllers/auth_controller");
 const roomController = require("./controllers/room_controller");
@@ -67,6 +68,7 @@ const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
 const moneyTransfer = require("./ultils/money_transfer");
 const requestHandler = require("./ultils/request_handler");
+const recommender = require("./ultils/recommender")
 // Mappers
 
 const container = awilix.createContainer();
@@ -121,6 +123,7 @@ container.register({
   discountModel: awilix.asValue(discountModel),
   orderModel: awilix.asValue(orderModel),
   cityModel: awilix.asValue(cityModel),
+  lastChoiceModel: awilix.asValue(lastChoiceModel),
 
   //controllers
   authController: awilix.asClass(authController),
@@ -145,7 +148,8 @@ container.register({
   passwordHasher: awilix.asClass(passwordHasher),
   authentication: awilix.asClass(authentication),
   moneyTransfer: awilix.asClass(moneyTransfer),
-  requestHandler: awilix.asClass(requestHandler)
+  requestHandler: awilix.asClass(requestHandler),
+  recommender: awilix.asClass(recommender)
 
   // mappers
 });
