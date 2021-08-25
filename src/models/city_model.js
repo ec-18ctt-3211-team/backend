@@ -14,7 +14,7 @@ const citySchema = mongoose.Schema(
         },
         room_id: {
             type: mongoose.Types.ObjectId,
-            required: true,
+            default: null,
         },
         thumnail: {
             type: String,
