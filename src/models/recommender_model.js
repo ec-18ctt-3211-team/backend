@@ -18,7 +18,8 @@ const optionsSchema = mongoose.Schema({
     required: true,
     default: false
   }
-})
+},
+{ _id: false })
 
 const similarDataSchema = mongoose.Schema({
   id: {
@@ -29,7 +30,8 @@ const similarDataSchema = mongoose.Schema({
     type: Number,
     required: true
   }
-})
+},
+{ _id: false })
 
 const recommenderSchema = mongoose.Schema({
   options: {

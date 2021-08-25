@@ -4,15 +4,18 @@ class CustomerController {
         getAllCustomerService,
         updateCustomerService,
         getRoomByCustomerService,
+        recommender
     }) {
         this.getCustomerService = getCustomerService;
         this.getAllCustomerService = getAllCustomerService;
         this.updateCustomerService = updateCustomerService;
         this.getRoomByCustomerService = getRoomByCustomerService;
+        this.recommender = recommender;
         this.show = this.show.bind(this);
         this.index = this.index.bind(this);
         this.update = this.update.bind(this);
         this.rooms = this.rooms.bind(this);
+        this.recommendedRooms = this.recommendedRooms.bind(this);
     }
 
     async show(req, res) {
@@ -74,6 +77,16 @@ class CustomerController {
             });
         } catch (err) {
             res.status(400).send({ valid: false, message: err.message });
+        }
+    }
+
+    async recommendedRooms(req, res) {
+        try {
+            const { id } = req.params;
+            const serviceResult = this.recommender.predict(id);
+            if (serviceResult.failure) throw new Error(serviceResult.message);
+        } catch(err) {
+            res.status(400).send({ valid: false, message: err.message })
         }
     }
 }

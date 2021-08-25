@@ -3,19 +3,19 @@ class RecommenderDaos {
     this.recommenderModel = recommenderModel;
   }
 
-  async create(data) {
-    const newRecommender = new this.recommenderModel({...data})
+  async create(model) {
+    const newRecommender = new this.recommenderModel(model)
     await newRecommender.save()
-    return newRecommender
+    return newRecommender;
   }
 
-  async update(id, data) {
-    const updatedRecommender = this.recommenderModel.findByIdAndUpdate(id, { ...data }, { new: true })
+  async update(id, model) {
+    const updatedRecommender = this.recommenderModel.findByIdAndUpdate(id, model, { new: true })
     return updatedRecommender
   }
 
-  async findOne(id) {
-    const recommender = this.recommenderModel.findById(id)
+  async getModel() {
+    const recommender = this.recommenderModel.find({})
     return recommender
   }
 }

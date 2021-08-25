@@ -44,6 +44,8 @@ const roomModel = require("./models/room_model");
 const discountModel = require("./models/discount_model");
 const orderModel = require("./models/order_model")
 const cityModel = require("./models/city_model");
+const recommenderModel = require("./models/recommender_model")
+const lastChoiceModel = require("./models/last_choice_model")
 // Controllers
 const authController = require("./controllers/auth_controller");
 const roomController = require("./controllers/room_controller");
@@ -61,6 +63,7 @@ const extraPriceDaos = require("./daos/extra_price_daos");
 const bookingDateDaos = require("./daos/booking_date_daos");
 const orderDaos = require("./daos/order_daos")
 const cityDaos = require("./daos/city_daos");
+const recommenderDaos = require("./daos/recommender_daos");
 // Ulti
 const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
@@ -120,6 +123,8 @@ container.register({
   discountModel: awilix.asValue(discountModel),
   orderModel: awilix.asValue(orderModel),
   cityModel: awilix.asValue(cityModel),
+  recommenderModel: awilix.asValue(recommenderModel),
+  lastChoiceModel: awilix.asValue(lastChoiceModel),
 
   //controllers
   authController: awilix.asClass(authController),
@@ -139,6 +144,7 @@ container.register({
   bookingDateDaos: awilix.asClass(bookingDateDaos),
   orderDaos: awilix.asClass(orderDaos),
   cityDaos: awilix.asClass(cityDaos),
+  recommenderDaos: awilix.asClass(recommenderDaos),
 
   // utilities
   passwordHasher: awilix.asClass(passwordHasher),

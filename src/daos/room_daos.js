@@ -182,6 +182,19 @@ class RoomDaos {
       return { failure: true, message: err.message }
     }
   }
+
+  async getByArrayId(ids) {
+    try {
+      const rooms = await this.roomModel.find({
+        _id: {
+          "$in": ids 
+        }
+      }).limit(8)
+      return { rooms }
+    } catch(err) {
+      return { failure: true, message: err.message }
+    }
+  }
 }
 
 module.exports = RoomDaos;

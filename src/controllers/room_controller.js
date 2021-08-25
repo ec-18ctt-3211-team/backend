@@ -4,13 +4,15 @@ class RoomController {
     getRoomByIdService,
     getRoomsByHostService,
     createRoomsService,
-    updateRoomsService
+    updateRoomsService,
+    recommender
   }) {
     this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
     this.getRoomsByHostService = getRoomsByHostService;
     this.createRoomsService = createRoomsService;
     this.updateRoomsService = updateRoomsService;
+    this.recommender = recommender;
 
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
@@ -37,8 +39,14 @@ class RoomController {
   async show(req, res) {
     try {
       const params = { ...req.params };
+      const { customer_id } = req.query;
       const serviceResult = await this.getRoomByIdService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
+      if (customer_id) {
+        const preparedData = this.recommender.prepareData(serviceResult.room);
+        console.log(preparedData)
+        await this.recommender.train(customer_id, preparedData)
+      }
       res.status(200).send({
         valid: true,
         room: serviceResult.room,
