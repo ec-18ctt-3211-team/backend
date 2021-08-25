@@ -168,14 +168,11 @@ class RoomDaos {
   async update(id, params) {
     try {
       const { photos } = params;
-      if (typeof photos[0] === "string") {
-        params = { ...params, thumnail: photos[0] }
-      }
+      params = { ...params, thumnail: photos[0].path }
       const updatedRoom = await this.roomModel.findByIdAndUpdate(id, params, { new: true });
       for (let i = 0; i < photos.length; ++i) {
-        const path = typeof photos[i] === "string" ? photos[i] : photos[i].path
         const photo = await this.photoModel.findByIdAndUpdate(
-          newPhotoIds[i], { path: path }, { new: true }
+          photos[i]._id, { path: photos[i].path }, { new: true }
         );
         if (!photo) throw new Error(`Photo <${newPhotoIds[i]}> not found`);
       }
