@@ -185,6 +185,15 @@ class RoomDaos {
       return { failure: true, message: err.message }
     }
   }
+
+  async delete(id) {
+    try {
+      const deletedRoom = await this.roomModel.deleteOne({ _id: id });
+      return { deletedRoom }
+    } catch(err) {
+      return { failure: true, message: err.message }
+    }
+  }
 }
 
 module.exports = RoomDaos;

@@ -28,6 +28,7 @@ const updateCityService = require("./services/city_services/update_city");
 const createRoomsService = require("./services/room_services/create_room");
 const updateRoomsService = require("./services/room_services/update_room")
 const deleteCityService = require("./services/city_services/delete_city");
+const deleteRoomService = require("./services/room_services/delete_room");
 // Routes
 const authRoutes = require("./routes/auth_routes");
 const roomRoutes = require("./routes/room_routes");
@@ -101,6 +102,7 @@ container.register({
   createRoomsService: awilix.asClass(createRoomsService),
   updateRoomsService: awilix.asClass(updateRoomsService),
   deleteCityService: awilix.asClass(deleteCityService),
+  deleteRoomService: awilix.asClass(deleteRoomService),
 
   // routes
   authRoutes: awilix.asFunction(authRoutes),

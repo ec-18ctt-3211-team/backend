@@ -4,19 +4,22 @@ class RoomController {
     getRoomByIdService,
     getRoomsByHostService,
     createRoomsService,
-    updateRoomsService
+    updateRoomsService,
+    deleteRoomService
   }) {
     this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
     this.getRoomsByHostService = getRoomsByHostService;
     this.createRoomsService = createRoomsService;
     this.updateRoomsService = updateRoomsService;
+    this.deleteRoomService = deleteRoomService
 
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
     this.host = this.host.bind(this);
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
   }
 
   async index(req, res) {
@@ -82,6 +85,17 @@ class RoomController {
       if (serviceResult.failure) throw new Error(serviceResult.message)
       res.status(201).send({ valid: true })
     } catch (err) {
+      res.status(400).send({ valid: false, message: err.message })
+    }
+  }
+
+  async delete(req, res) {
+    try {
+      const { id } = req.params;
+      const serviceResult = this.deleteRoomService.execute(id);
+      if (serviceResult.failure) throw new Error(serviceResult.message)
+      res.status(204).send(null);
+    } catch(err) {
       res.status(400).send({ valid: false, message: err.message })
     }
   }
