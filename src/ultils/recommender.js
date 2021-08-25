@@ -40,3 +40,4 @@ class Recommender {
     }
 }
 
+module.exports = Recommender
