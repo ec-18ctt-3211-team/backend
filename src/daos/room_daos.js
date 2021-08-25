@@ -153,7 +153,7 @@ class RoomDaos {
   async create(params) {
     try {
       const { photos } = params;
-      const newRoom = await this.roomModel.insertMany([{ ...params }])
+      const newRoom = await this.roomModel.insertMany([{ ...params, thumnail: photos[0] }])
 
       const newPhotos = photos.map(path => {
         return { room_id: newRoom[0]._id, path: path }
