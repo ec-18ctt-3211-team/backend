@@ -82,7 +82,8 @@ class CityController {
     async update(req, res) {
         try {
             const params = {
-                ...req.params, ...req.body, thumnail: `/${req.filename}`
+                ...req.params, ...req.body,
+                thumnail: req.filename ? `/${req.filename}` : "no-thumnail.jpeg"
             };
             const serviceResult = await this.updateCityService.execute(params);
             if (serviceResult.failure) throw new Error(serviceResult.message)
