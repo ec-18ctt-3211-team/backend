@@ -63,6 +63,7 @@ const passwordHasher = require("./ultils/password_hasher");
 const authentication = require("./ultils/authentication");
 const moneyTransfer = require("./ultils/money_transfer");
 const requestHandler = require("./ultils/request_handler");
+const recommender = require("./ultils/recommender")
 // Mappers
 
 const container = awilix.createContainer();
@@ -137,7 +138,8 @@ container.register({
   passwordHasher: awilix.asClass(passwordHasher),
   authentication: awilix.asClass(authentication),
   moneyTransfer: awilix.asClass(moneyTransfer),
-  requestHandler: awilix.asClass(requestHandler)
+  requestHandler: awilix.asClass(requestHandler),
+  recommender: awilix.asClass(recommender)
 
   // mappers
 });
