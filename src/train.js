@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("../config.json");
-const roomModel = require("./models/room_model")
+const RoomModel = require("./models/room_model")
 const recommender = require("./ultils/recommender")
 
 mongoose.connect(config.Database.connectionString, {
