@@ -5,7 +5,8 @@ class RoomController {
     getRoomsByHostService,
     createRoomsService,
     updateRoomsService,
-    recommender
+    recommender,
+    lastChoiceModel
   }) {
     this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
@@ -13,6 +14,7 @@ class RoomController {
     this.createRoomsService = createRoomsService;
     this.updateRoomsService = updateRoomsService;
     this.recommender = recommender;
+    this.lastChoiceModel = lastChoiceModel;
 
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
@@ -43,9 +45,14 @@ class RoomController {
       const serviceResult = await this.getRoomByIdService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
       if (customer_id) {
-        const preparedData = this.recommender.prepareData(serviceResult.room);
-        console.log(preparedData)
-        await this.recommender.train(customer_id, preparedData)
+        const result = await this.lastChoiceModel.findOneAndUpdate(
+          { customer_id },
+          { room_id: serviceResult.room._id }
+        )
+        if (!result) {
+          const newChoice = new this.lastChoiceModel({ customer_id, room_id: params.id })
+          await newChoice.save()
+        }
       }
       res.status(200).send({
         valid: true,

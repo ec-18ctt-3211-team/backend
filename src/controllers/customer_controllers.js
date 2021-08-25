@@ -83,8 +83,9 @@ class CustomerController {
     async recommendedRooms(req, res) {
         try {
             const { id } = req.params;
-            const serviceResult = this.recommender.predict(id);
+            const serviceResult = await this.recommender.predict(id);
             if (serviceResult.failure) throw new Error(serviceResult.message);
+            res.status(200).send({ rooms: serviceResult.rooms, valid: true })
         } catch(err) {
             res.status(400).send({ valid: false, message: err.message })
         }
