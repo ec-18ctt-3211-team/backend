@@ -153,12 +153,12 @@ class RoomDaos {
   async create(params) {
     try {
       const { photos } = params;
-      const newRoom = await this.roomModel.insertMany([{ ...params }])
+      const newRoom = await this.roomModel.insertMany([{ ...params, thumnail: photos[0] }])
 
-      photos = photos.map(path => {
+      const newPhotos = photos.map(path => {
         return { room_id: newRoom[0]._id, path: path }
       });
-      await this.photoModel.insertMany(photos)
+      await this.photoModel.insertMany(newPhotos)
       return {}
     } catch (err) {
       return { failure: true, message: err.message }
