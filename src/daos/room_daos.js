@@ -168,7 +168,10 @@ class RoomDaos {
   async update(id, params) {
     try {
       const { photos } = params;
-      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params, thumnail: photos[0] }, { new: true });
+      if (photos) {
+        params = { ...params, thumnail: photos[0] }
+      }
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, params, { new: true });
       for (let i = 0; i < photos.length; ++i) {
         const photo = await this.photoModel.findByIdAndUpdate(
           newPhotoIds[i], { path: imgs[i] }, { new: true }
