@@ -2,8 +2,7 @@ const ContentBasedRecommender = require('content-based-recommender')
 const mongoose = require('mongoose')
 
 class Recommender {
-    constructor({ recommenderDaos, roomDaos, lastChoiceModel }) {
-        this.recommenderDaos = recommenderDaos
+    constructor({ roomDaos, lastChoiceModel }) {
         this.roomDaos = roomDaos
         this.lastChoiceModel = lastChoiceModel
 
