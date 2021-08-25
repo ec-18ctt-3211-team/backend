@@ -168,10 +168,11 @@ class RoomDaos {
   async update(id, params) {
     try {
       const { photos } = params;
-      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, { ...params, thumnail: photos[0] }, { new: true });
+      params = { ...params, thumnail: photos[0].path }
+      const updatedRoom = await this.roomModel.findByIdAndUpdate(id, params, { new: true });
       for (let i = 0; i < photos.length; ++i) {
         const photo = await this.photoModel.findByIdAndUpdate(
-          newPhotoIds[i], { path: imgs[i] }, { new: true }
+          photos[i]._id, { path: photos[i].path }, { new: true }
         );
         if (!photo) throw new Error(`Photo <${newPhotoIds[i]}> not found`);
       }
@@ -189,8 +190,16 @@ class RoomDaos {
         _id: {
           "$in": ids 
         }
-      }).limit(8)
+      })
       return { rooms }
+      } catch(err) {
+      return { failure: true, message: err.message }
+    }
+    
+  async delete(id) {
+    try {
+      const deletedRoom = await this.roomModel.deleteOne({ _id: id });
+      return { deletedRoom }
     } catch(err) {
       return { failure: true, message: err.message }
     }
