@@ -12,7 +12,10 @@ class Recommender {
         this.prepareData = this.prepareData.bind(this)
     }
 
-    async train(data) {
+    async train() {
+        const rooms = await this.roomDaos.getAll();
+        const data = this.prepareData(rooms);
+
         const model = await this.recommenderDaos.getModel()
         if (model.lengt > 0) {
             const recommender = new ContentBasedRecommender()

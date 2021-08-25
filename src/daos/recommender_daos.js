@@ -1,6 +1,10 @@
 class RecommenderDaos {
   constructor({ recommenderModel }) {
     this.recommenderModel = recommenderModel;
+
+    this.create = this.create.bind(this)
+    this.update = this.update.bind(this)
+    this.getModel = this.getModel.bind(this)
   }
 
   async create(model) {

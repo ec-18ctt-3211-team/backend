@@ -76,6 +76,7 @@ class RoomController {
       const params = req.body;
       const serviceResult = await this.createRoomsService.execute(params)
       if (serviceResult.failure) throw new Error(serviceResult.message)
+      await this.recommender.train()
       res.status(204).send(null)
     } catch (err) {
       res.status(400).send({ valid: false, message: err.message })
