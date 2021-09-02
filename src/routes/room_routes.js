@@ -1,14 +1,14 @@
 const express = require("express");
-const multer = require("multer")
+const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, `${__dirname}/../../public/`);
   },
   filename: (req, file, cb) => {
-    if (!req.filenames) req.filenames = []
-    const newName = `${new Date().toISOString()}_${file.originalname}`
-    req.filenames.push(newName)
+    if (!req.filenames) req.filenames = [];
+    const newName = `${new Date().toISOString()}_${file.originalname}`;
+    req.filenames.push(newName);
     cb(null, newName);
   },
 });
@@ -36,7 +36,7 @@ module.exports = ({ roomController }) => {
   router.get("/:id", roomController.show);
   router.get("/host/:id", roomController.host);
   router.post("/", roomController.create);
-  router.put('/:id', roomController.update)
-  router.delete("/:id", roomController.delete)
+  router.put("/:id", roomController.update);
+  router.delete("/:id", roomController.delete);
   return router;
 };

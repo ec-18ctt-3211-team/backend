@@ -1,20 +1,19 @@
 const express = require("express");
 const cors = require("cors");
 
-
 module.exports = ({
   authRoutes,
   customerRoutes,
   discountRoutes,
   roomRoutes,
   orderRoutes,
-  cityRoutes
+  cityRoutes,
 }) => {
   const router = express.Router();
   router.use(express.static("public"));
   router.use(cors({ exposedHeaders: "auth-token" }));
-  router.use(express.json({ limit: '5mb' }));
-  router.use(express.urlencoded({ limit: '5mb', extended: true }));
+  router.use(express.json({ limit: "5mb" }));
+  router.use(express.urlencoded({ limit: "5mb", extended: true }));
 
   router.use("/auth", authRoutes);
   router.use("/rooms", roomRoutes);
