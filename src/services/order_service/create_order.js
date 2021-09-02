@@ -7,11 +7,11 @@ class CreateOrder {
   }
   async execute(params) {
     try {
-      const { customer_id } = params;
+      const { customer_id, room_id } = params;
       if (customer_id) {
         const result = await this.lastChoiceModel.findOneAndUpdate(
           { customer_id },
-          { room_id: serviceResult.room._id }
+          { room_id }
         );
         if (!result) {
           const newChoice = new this.lastChoiceModel({
