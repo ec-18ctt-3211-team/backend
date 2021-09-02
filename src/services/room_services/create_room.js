@@ -6,11 +6,11 @@ class CreateRoomService {
   }
 
   async execute(params) {
-    const { city } = params;
-    const parsedCity = city.split("_").join(" ");
+    const { address } = params;
+    const parsedCity = address.city.split("_").join(" ");
     const daosResult = await this.roomDaos.create({
       ...params,
-      city: parsedCity,
+      address: { city: parsedCity },
     });
     return daosResult;
   }
