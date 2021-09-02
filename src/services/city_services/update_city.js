@@ -6,14 +6,7 @@ class UpdateCity {
   }
   async execute(params) {
     try {
-      const { address } = params;
-      const city = address.city;
-      const parsedCity = city.split("_").join(" ");
-      address.city = parsedCity;
-      const daosResult = await this.cityDaos.update({
-        ...params,
-        address: address,
-      });
+      const daosResult = await this.cityDaos.update({ params });
       if (daosResult.failure || !daosResult.updatedCity)
         throw new Error(daosResult.message || "City is not found");
       return daosResult;
