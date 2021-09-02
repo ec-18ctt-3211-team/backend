@@ -6,8 +6,7 @@ class RoomController {
     createRoomsService,
     updateRoomsService,
     recommender,
-    lastChoiceModel,
-    deleteRoomService
+    deleteRoomService,
   }) {
     this.getRoomsService = getRoomsService;
     this.getRoomByIdService = getRoomByIdService;
@@ -15,8 +14,7 @@ class RoomController {
     this.createRoomsService = createRoomsService;
     this.updateRoomsService = updateRoomsService;
     this.recommender = recommender;
-    this.lastChoiceModel = lastChoiceModel;
-    this.deleteRoomService = deleteRoomService
+    this.deleteRoomService = deleteRoomService;
 
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
@@ -47,16 +45,6 @@ class RoomController {
       const { customer_id } = req.query;
       const serviceResult = await this.getRoomByIdService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
-      if (customer_id) {
-        const result = await this.lastChoiceModel.findOneAndUpdate(
-          { customer_id },
-          { room_id: serviceResult.room._id }
-        )
-        if (!result) {
-          const newChoice = new this.lastChoiceModel({ customer_id, room_id: params.id })
-          await newChoice.save()
-        }
-      }
       res.status(200).send({
         valid: true,
         room: serviceResult.room,
@@ -84,23 +72,23 @@ class RoomController {
   async create(req, res) {
     try {
       const params = req.body;
-      const serviceResult = await this.createRoomsService.execute(params)
-      if (serviceResult.failure) throw new Error(serviceResult.message)
-      res.status(204).send(null)
+      const serviceResult = await this.createRoomsService.execute(params);
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res.status(204).send(null);
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message })
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 
   async update(req, res) {
     try {
       const { id } = req.params;
-      const params = req.body
-      const serviceResult = this.updateRoomsService.execute(id, params)
-      if (serviceResult.failure) throw new Error(serviceResult.message)
-      res.status(201).send({ valid: true })
+      const params = req.body;
+      const serviceResult = this.updateRoomsService.execute(id, params);
+      if (serviceResult.failure) throw new Error(serviceResult.message);
+      res.status(201).send({ valid: true });
     } catch (err) {
-      res.status(400).send({ valid: false, message: err.message })
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 
@@ -108,10 +96,10 @@ class RoomController {
     try {
       const { id } = req.params;
       const serviceResult = this.deleteRoomService.execute(id);
-      if (serviceResult.failure) throw new Error(serviceResult.message)
+      if (serviceResult.failure) throw new Error(serviceResult.message);
       res.status(204).send(null);
-    } catch(err) {
-      res.status(400).send({ valid: false, message: err.message })
+    } catch (err) {
+      res.status(400).send({ valid: false, message: err.message });
     }
   }
 }
