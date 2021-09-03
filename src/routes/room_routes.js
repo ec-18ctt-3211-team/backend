@@ -30,13 +30,13 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
-module.exports = ({ roomController }) => {
+module.exports = ({ roomController, authentication }) => {
   const router = express.Router();
   router.get("/", roomController.index);
-  router.get("/:id", roomController.show);
+  router.get("/:id", authentication.verify, roomController.show);
   router.get("/host/:id", roomController.host);
-  router.post("/", roomController.create);
-  router.put("/:id", roomController.update);
-  router.delete("/:id", roomController.delete);
+  router.post("/", authentication.verify, roomController.create);
+  router.put("/:id", authentication.verify, roomController.update);
+  router.delete("/:id", authentication.verify, roomController.delete);
   return router;
 };
