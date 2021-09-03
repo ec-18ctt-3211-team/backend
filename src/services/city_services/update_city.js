@@ -6,13 +6,7 @@ class UpdateCity {
   }
   async execute(params) {
     try {
-      const { id, titles, thumnail, is_pinned } = params;
-      const daosResult = await this.cityDaos.update(
-        id,
-        titles,
-        thumnail,
-        is_pinned
-      );
+      const daosResult = await this.cityDaos.update(params);
       if (daosResult.failure || !daosResult.updatedCity)
         throw new Error(daosResult.message || "City is not found");
       return daosResult;
