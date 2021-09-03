@@ -16,7 +16,7 @@ module.exports = class Authentication {
 
   // FE -> request -> middlesware1 ->  Controller(BE)
   verify(req, res, next) {
-    const token = req.header("token");
+    const token = req.header("auth-token");
     if (!token) return res.status(401).send("Acess denined");
     return jwt.verify(token, config.Server.SECRET_KEY, (err, decoded) => {
       if (err) return res.status(401).send("Invalid token");
