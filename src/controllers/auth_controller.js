@@ -24,7 +24,7 @@ class AuthController {
       const params = req.body;
       const serviceResult = await this.loginService.execute(params);
       if (serviceResult.failure) throw new Error(serviceResult.message);
-      res.status(200).header("token", serviceResult.token).send({
+      res.status(200).header("auth-token", serviceResult.token).send({
         valid: true,
         userId: serviceResult.userId,
         name: serviceResult.name,
