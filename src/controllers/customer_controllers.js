@@ -46,12 +46,8 @@ class CustomerController {
 
     async update(req, res) {
         try {
-            const params = req.params;
-            const body = req.body;
-            const serviceResult = await this.updateCustomerService.execute(
-                params,
-                body
-            );
+            const params = { ...req.params, ...req.body };
+            const serviceResult = await this.updateCustomerService.execute(params);
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({
                 valid: true,
@@ -86,7 +82,7 @@ class CustomerController {
             const serviceResult = await this.recommender.predict(id);
             if (serviceResult.failure) throw new Error(serviceResult.message);
             res.status(200).send({ rooms: serviceResult.rooms, valid: true })
-        } catch(err) {
+        } catch (err) {
             res.status(400).send({ valid: false, message: err.message })
         }
     }
