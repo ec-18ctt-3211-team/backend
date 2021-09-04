@@ -1,12 +1,12 @@
 const express = require("express");
 
-module.exports = ({ cityController }) => {
+module.exports = ({ cityController, authentication }) => {
     const router = express.Router();
-    router.post("/", cityController.create);
-    router.get("/", cityController.index);
+    router.post("/", authentication.verify, cityController.create);
+    router.get("/", authentication.verify, cityController.index);
     router.get("/pinned", cityController.pinned);
-    router.get("/:id", cityController.show);
-    router.put("/:id", cityController.update);
-    router.delete("/:id", cityController.delete);
+    router.get("/:id", authentication.verify, cityController.show);
+    router.put("/:id", authentication.verify, cityController.update);
+    router.delete("/:id", authentication.verify, cityController.delete);
     return router;
 };
