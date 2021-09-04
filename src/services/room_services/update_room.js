@@ -11,8 +11,7 @@ class UpdateRoomService {
     const parsedCity = city.split("_").join(" ");
     address.city = parsedCity;
     const daosResult = this.roomDaos.update(
-      id,
-      { ...params, address: address },
+      id, { ...params, address: address },
       newPhotoIds,
       newFileNames
     );

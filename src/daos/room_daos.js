@@ -188,20 +188,20 @@ class RoomDaos {
     try {
       const rooms = await this.roomModel.find({
         _id: {
-          "$in": ids 
+          "$in": ids
         }
       })
       return { rooms }
-      } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
     }
   }
-    
+
   async delete(id) {
     try {
       const deletedRoom = await this.roomModel.deleteOne({ _id: id });
       return { deletedRoom }
-    } catch(err) {
+    } catch (err) {
       return { failure: true, message: err.message }
     }
   }

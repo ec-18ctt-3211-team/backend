@@ -9,14 +9,11 @@ class CreateOrder {
     try {
       const { customer_id, room_id } = params;
       if (customer_id) {
-        const result = await this.lastChoiceModel.findOneAndUpdate(
-          { customer_id },
-          { room_id }
-        );
+        const result = await this.lastChoiceModel.findOneAndUpdate({ customer_id }, { room_id });
         if (!result) {
           const newChoice = new this.lastChoiceModel({
             customer_id,
-            room_id: params.id,
+            room_id: room_id,
           });
           await newChoice.save();
         }
