@@ -3,13 +3,13 @@ class UpdateCustomer {
         this.customerDaos = customerDaos;
         this.passwordHasher = passwordHasher;
     }
-    async execute(params, body) {
+    async execute(params) {
         try {
-            const { id } = params;
-            const { email, name, password, phone, ci, email_paypal } = body;
-            const hashedPassword = await this.passwordHasher.hash(password);
-            const daosResult = await this.customerDaos.updateById(id, email, name,
-                hashedPassword, phone, ci, email_paypal);
+            if (params.password) {
+                const hashedPassword = await this.passwordHasher.hash(params.password);
+                params.password = hashedPassword;
+            }
+            const daosResult = await this.customerDaos.updateById(params);
             if (!daosResult) throw new Error("Customer is not found");
             else if (daosResult.failure) throw new Error(daosResult.message);
             return daosResult;
