@@ -10,7 +10,7 @@ class CreateRoomService {
     const city = address.city;
     const parsedCity = city.split("_").join(" ");
     address.city = parsedCity;
-    const daosResult = await this.roomDaos.create({ params });
+    const daosResult = await this.roomDaos.create({ ...params, address: address });
     return daosResult;
   }
 }
