@@ -32,15 +32,15 @@ class CustomerDaos {
     }
   }
 
-  async updateById(id, email, name, password, phone, payment_number, ci) {
+  async updateById(id, email, name, password, phone, ci, email_paypal) {
     try {
       const updatedCustomer = await this.customerModel.findByIdAndUpdate(id, {
         email: email,
         name: name,
         password: password,
         phone: phone,
-        payment_number: payment_number,
-        ci: ci
+        ci: ci,
+        email_paypal: email_paypal
       }, { new: true });
       return updatedCustomer;
     } catch (err) {
