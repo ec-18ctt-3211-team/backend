@@ -33,7 +33,7 @@ const upload = multer({
 module.exports = ({ roomController, authentication }) => {
   const router = express.Router();
   router.get("/", roomController.index);
-  router.get("/:id", authentication.verify, roomController.show);
+  router.get("/:id", roomController.show);
   router.get("/host/:id", roomController.host);
   router.post("/", authentication.verify, roomController.create);
   router.put("/:id", authentication.verify, roomController.update);
