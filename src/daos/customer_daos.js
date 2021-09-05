@@ -14,7 +14,8 @@ class CustomerDaos {
           .limit(limit)
           .skip(skipRows);
       } else {
-        customers = await this.customerModel.find({});
+        customers = await this.customerModel
+          .find({});
       }
       const total = await this.customerModel.estimatedDocumentCount();
       return { customers, total };
@@ -25,7 +26,8 @@ class CustomerDaos {
 
   async getById(id) {
     try {
-      const customer = await this.customerModel.findById(id);
+      const customer = await this.customerModel
+        .findById(id);
       return customer;
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" };
@@ -34,8 +36,8 @@ class CustomerDaos {
 
   async updateById(params) {
     try {
-      const updatedCustomer = await this.customerModel.findByIdAndUpdate(params.id,
-        { ...params }, { new: true });
+      const updatedCustomer = await this.customerModel
+        .findByIdAndUpdate(params.id, { ...params }, { new: true });
       return updatedCustomer;
     } catch (err) {
       return { failure: true, message: err.message || "Something went wrong" }

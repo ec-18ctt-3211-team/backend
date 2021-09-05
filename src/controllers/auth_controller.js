@@ -30,6 +30,7 @@ class AuthController {
         name: serviceResult.name,
         ava: serviceResult.ava,
         host: serviceResult.host,
+        step_up: serviceResult.step_up
       });
     } catch (err) {
       res.status(401).send({ valid: false, message: err.message });
