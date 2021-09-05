@@ -28,14 +28,20 @@ class AuthLogin {
       user.name +
       user.phone +
       user.ava +
-      user.payment_number +
+      user.email_paypal +
       user.ci;
+    let step_up = false;
+    if (user.ci && user.email_paypal) {
+      step_up = true;
+    }
+
     return {
       token: this.authentication.sign(stringUser),
       userId: user.id,
       name: user.name,
       ava: user.ava,
       host: user.is_host,
+      step_up: step_up
     };
   }
 }
